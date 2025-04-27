@@ -84,18 +84,13 @@ Command Line Tool: Terminal, PowerShell, or Command Prompt for running commands.
 
 Setup Instructions
 
-Clone the Repository:
-git clone https://github.com/yourusername/DeviceManagementAPI.git
-cd DeviceManagementAPI
-
+Clone the Repository
 
 Restore Dependencies:Restore the NuGet packages required for the project.
 dotnet restore
 
-
 Verify the Project:Ensure the project builds successfully.
 dotnet build
-
 
 
 Running the Project
@@ -127,7 +122,7 @@ app.Run();
 Run the Application:
 dotnet run --project DeviceManagementAPI
 
-The API will start on https://localhost:5001 (or a similar port). You can use tools like Postman or curl to test the endpoints.
+The API will start on https://localhost:7021 (or a similar port). You can use tools like Postman or curl to test the endpoints.
 
 
 API Endpoints
