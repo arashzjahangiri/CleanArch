@@ -55,6 +55,7 @@ DeviceServiceTests.cs: Tests for the DeviceService.
 
 Architecture Diagram
 The following Mermaid diagram illustrates the flow of data through the application:
+:::mermaid
 graph TD
     A[Client] -->|HTTP Request| B[DevicesController]
     B -->|Calls| C[IDeviceService]
@@ -65,7 +66,7 @@ graph TD
     E -->|Maps to DTO| D
     D -->|Returns DTO| B
     B -->|HTTP Response| A
-
+:::
 
 Client: Sends HTTP requests (e.g., GET, POST) to the API.
 DevicesController: Handles incoming HTTP requests and returns responses.
