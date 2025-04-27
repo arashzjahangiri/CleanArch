@@ -154,8 +154,6 @@ This will run all tests in the `DeviceManagementAPI.Tests` project. You should s
 - **DeviceControllerTests.cs**: Tests for the `DevicesController`, covering all API endpoints.
 - **DeviceServiceTests.cs**: Tests for the `DeviceService`, covering all business logic methods.
 
-**Total Tests**: 20 (11 for `DeviceControllerTests`, 9 for `DeviceServiceTests`).
-
 **Expected Output**:
 
 ```
