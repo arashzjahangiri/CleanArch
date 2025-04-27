@@ -134,7 +134,7 @@ curl https://localhost:7021/api/devices
 #### **Create a Device**
 
 ```bash
-curl -X POST https://localhost:7021/api/devices -H "Content-Type: application/json" -d '{"name":"Device1","type":"Sensor"}'
+curl -X POST https://localhost:7021/api/devices -H "Content-Type: application/json" -d '{"name":"iPhone 15","type":"Smart phone"}'
 ```
 
 ## **Running Tests**
