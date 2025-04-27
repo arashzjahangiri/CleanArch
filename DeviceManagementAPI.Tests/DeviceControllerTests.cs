@@ -26,8 +26,8 @@ namespace DeviceManagementAPI.Tests
             var context = GetInMemoryDbContext();
             context.Devices.AddRange(new List<Device>
             {
-                new Device { Id = 1, Name = "Device1", Type = "Sensor" },
-                new Device { Id = 2, Name = "Device2", Type = "Actuator" }
+                new Device { Id = 1, Name = "iPhone 15", Type = "Smart phone" },
+                new Device { Id = 2, Name = "iPhone 15 Max", Type = "Smart phone" }
             });
             await context.SaveChangesAsync();
             var service = new DeviceService(context);
@@ -40,8 +40,8 @@ namespace DeviceManagementAPI.Tests
             var okResult = Assert.IsType<OkObjectResult>(result.Result);
             var devices = Assert.IsType<List<DeviceDto>>(okResult.Value);
             Assert.Equal(2, devices.Count);
-            Assert.Contains(devices, d => d.Name == "Device1" && d.Type == "Sensor");
-            Assert.Contains(devices, d => d.Name == "Device2" && d.Type == "Actuator");
+            Assert.Contains(devices, d => d.Name == "iPhone 15" && d.Type == "Smart phone");
+            Assert.Contains(devices, d => d.Name == "iPhone 15 Max" && d.Type == "Smart phone");
         }
 
         [Fact]
@@ -66,7 +66,7 @@ namespace DeviceManagementAPI.Tests
         {
             // Arrange
             var context = GetInMemoryDbContext();
-            var device = new Device { Id = 1, Name = "Device1", Type = "Sensor" };
+            var device = new Device { Id = 1, Name = "iPhone 15", Type = "Smart phone" };
             context.Devices.Add(device);
             await context.SaveChangesAsync();
             var service = new DeviceService(context);
@@ -79,8 +79,8 @@ namespace DeviceManagementAPI.Tests
             var okResult = Assert.IsType<OkObjectResult>(result.Result);
             var deviceDto = Assert.IsType<DeviceDto>(okResult.Value);
             Assert.Equal(1, deviceDto.Id);
-            Assert.Equal("Device1", deviceDto.Name);
-            Assert.Equal("Sensor", deviceDto.Type);
+            Assert.Equal("iPhone 15", deviceDto.Name);
+            Assert.Equal("Smart phone", deviceDto.Type);
         }
 
         [Fact]
@@ -105,7 +105,7 @@ namespace DeviceManagementAPI.Tests
             var context = GetInMemoryDbContext();
             var service = new DeviceService(context);
             var controller = new DevicesController(service);
-            var request = new CreateDeviceRequest { Name = "NewDevice", Type = "Sensor" };
+            var request = new CreateDeviceRequest { Name = "iPhone 15", Type = "Smart phone" };
 
             // Act
             var result = await controller.CreateDevice(request);
@@ -113,8 +113,8 @@ namespace DeviceManagementAPI.Tests
             // Assert
             var createdResult = Assert.IsType<CreatedAtActionResult>(result.Result);
             var deviceDto = Assert.IsType<DeviceDto>(createdResult.Value);
-            Assert.Equal("NewDevice", deviceDto.Name);
-            Assert.Equal("Sensor", deviceDto.Type);
+            Assert.Equal("iPhone 15", deviceDto.Name);
+            Assert.Equal("Smart phone", deviceDto.Type);
             Assert.Equal("GetDevice", createdResult.ActionName);
             Assert.Equal(deviceDto.Id, createdResult.RouteValues["id"]);
         }
@@ -127,7 +127,7 @@ namespace DeviceManagementAPI.Tests
             var service = new DeviceService(context);
             var controller = new DevicesController(service);
             controller.ModelState.AddModelError("Name", "Name is required");
-            var request = new CreateDeviceRequest { Name = null!, Type = "Sensor" };
+            var request = new CreateDeviceRequest { Name = null!, Type = "Smart phone" };
 
             // Act
             var result = await controller.CreateDevice(request);
@@ -141,12 +141,12 @@ namespace DeviceManagementAPI.Tests
         {
             // Arrange
             var context = GetInMemoryDbContext();
-            var device = new Device { Id = 1, Name = "OldDevice", Type = "Sensor" };
+            var device = new Device { Id = 1, Name = "iPhone 15", Type = "Smart phone" };
             context.Devices.Add(device);
             await context.SaveChangesAsync();
             var service = new DeviceService(context);
             var controller = new DevicesController(service);
-            var request = new UpdateDeviceRequest { Name = "UpdatedDevice", Type = "Actuator" };
+            var request = new UpdateDeviceRequest { Name = "iPhone 15 Max", Type = "Smart phone" };
 
             // Act
             var result = await controller.UpdateDevice(1, request);
@@ -154,8 +154,8 @@ namespace DeviceManagementAPI.Tests
             // Assert
             Assert.IsType<NoContentResult>(result);
             var updatedDevice = await context.Devices.FindAsync(1);
-            Assert.Equal("UpdatedDevice", updatedDevice!.Name);
-            Assert.Equal("Actuator", updatedDevice.Type);
+            Assert.Equal("iPhone 15 Max", updatedDevice!.Name);
+            Assert.Equal("Smart phone", updatedDevice.Type);
         }
 
         [Fact]
@@ -165,7 +165,7 @@ namespace DeviceManagementAPI.Tests
             var context = GetInMemoryDbContext();
             var service = new DeviceService(context);
             var controller = new DevicesController(service);
-            var request = new UpdateDeviceRequest { Name = "UpdatedDevice", Type = "Actuator" };
+            var request = new UpdateDeviceRequest { Name = "iPhone 15 Max", Type = "Smart phone" };
 
             // Act
             var result = await controller.UpdateDevice(1, request);
@@ -182,7 +182,7 @@ namespace DeviceManagementAPI.Tests
             var service = new DeviceService(context);
             var controller = new DevicesController(service);
             controller.ModelState.AddModelError("Name", "Name is required");
-            var request = new UpdateDeviceRequest { Name = null!, Type = "Actuator" };
+            var request = new UpdateDeviceRequest { Name = null!, Type = "Smart phone" };
 
             // Act
             var result = await controller.UpdateDevice(1, request);
@@ -196,7 +196,7 @@ namespace DeviceManagementAPI.Tests
         {
             // Arrange
             var context = GetInMemoryDbContext();
-            var device = new Device { Id = 1, Name = "Device1", Type = "Sensor" };
+            var device = new Device { Id = 1, Name = "iPhone 15", Type = "Smart phone" };
             context.Devices.Add(device);
             await context.SaveChangesAsync();
             var service = new DeviceService(context);
