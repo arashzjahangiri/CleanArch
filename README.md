@@ -160,14 +160,14 @@ None
 POST
 /api/devices
 Create a new device
-{ "name": "Device1", "type": "Sensor" }
+{ "name": "iPhone 15", "type": "Smart phone" }
 201 Created
 
 
 PUT
 /api/devices/{id}
 Update an existing device
-{ "name": "UpdatedDevice", "type": "Actuator" }
+{ "name": "iPhone 15 Max", "type": "Smart phone" }
 204 No Content or 404 Not Found
 
 
