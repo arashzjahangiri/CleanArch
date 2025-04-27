@@ -103,37 +103,6 @@ Ensure the project builds successfully.
 dotnet build
 ```
 
-## **Running the Project**
-
-This project is primarily a test-focused project using an in-memory database, so there’s no need to set up a real database. However, you can run the API to test endpoints manually by adding a `Program.cs` file and running the application.
-
-### **Add a Program.cs (Optional)**
-
-If you want to run the API, create a `Program.cs` file in the root of the `DeviceManagementAPI` project:
-
-```csharp
-using DeviceManagementAPI.Data;
-using DeviceManagementAPI.Services;
-using Microsoft.EntityFrameworkCore;
-
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-builder.Services.AddControllers();
-builder.Services.AddScoped<IDeviceService, DeviceService>();
-builder.Services.AddDbContext<DeviceDbContext>(options =>
-    options.UseInMemoryDatabase("DeviceDb"));
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-app.UseHttpsRedirection();
-app.UseAuthorization();
-app.MapControllers();
-
-app.Run();
-```
-
 ### **Run the Application**
 
 ```bash
