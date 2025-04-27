@@ -137,6 +137,20 @@ curl https://localhost:7021/api/devices
 curl -X POST https://localhost:7021/api/devices -H "Content-Type: application/json" -d '{"name":"iPhone 15","type":"Smart phone"}'
 ```
 
+### **Using Swagger**
+
+The project is configured to use Swashbuckle for Swagger support.
+
+**Access Swagger UI**
+
+Run the application as described in the Running the Project section.
+
+Open your browser and navigate to:
+
+https://localhost:5276/swagger
+
+This will display the Swagger UI, listing all available endpoints.
+
 ## **Running Tests**
 
 The project includes unit tests for both the controller and service layers using xUnit.
