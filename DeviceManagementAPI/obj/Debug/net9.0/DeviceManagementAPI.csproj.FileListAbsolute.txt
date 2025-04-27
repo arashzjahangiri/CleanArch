@@ -88,3 +88,4 @@ C:\Users\ArashZandJahangiri\Downloads\InterviewSampleCode\DeviceManagementAPI\De
 C:\Users\ArashZandJahangiri\Downloads\InterviewSampleCode\DeviceManagementAPI\DeviceManagementAPI\obj\Debug\net9.0\DeviceMa.1CA197F7.Up2Date
 C:\Users\ArashZandJahangiri\Downloads\InterviewSampleCode\DeviceManagementAPI\DeviceManagementAPI\obj\Debug\net9.0\DeviceManagementAPI.genruntimeconfig.cache
 C:\Users\ArashZandJahangiri\Downloads\InterviewSampleCode\DeviceManagementAPI\DeviceManagementAPI\obj\Debug\net9.0\ref\DeviceManagementAPI.dll
+C:\Users\ArashZandJahangiri\Downloads\InterviewSampleCode\DeviceManagementAPI\DeviceManagementAPI\obj\Debug\net9.0\DeviceManagementAPI.sourcelink.json
