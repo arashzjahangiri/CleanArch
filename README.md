@@ -1,11 +1,3 @@
-**DeviceManagementAPI (C#)** 
-project, ensuring that all titles and headlines use `##` or `#` in Markdown syntax, as requested. Since the previous README already uses `#` and `##` for titles and headlines, I’ll refine it to ensure consistency and clarity. Additionally, I’ll address the port inconsistency mentioned earlier (e.g., `http://localhost:5276` vs. `https://localhost:7021`) by standardizing to `https://localhost:7021` for all examples, assuming that’s the intended port for running the API.
-
-I’ll provide the README in Markdown format (not HTML), as it’s more suitable for a project README and aligns with your request for `##` or `#` syntax. The content will remain comprehensive, covering all sections as before, with bolded titles and headlines using `**` as per your previous request.
-
----
-
-
 # **DeviceManagementAPI (C#)**
 
 A RESTful API built with ASP.NET Core to manage devices, providing CRUD operations for device entities. The project uses Entity Framework Core with an in-memory database for testing and follows a clean architecture with services, controllers, and data models.
