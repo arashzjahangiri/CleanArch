@@ -229,3 +229,4 @@ C:\Users\ArashZandJahangiri\Downloads\InterviewSampleCode\DeviceManagementAPI\De
 C:\Users\ArashZandJahangiri\Downloads\InterviewSampleCode\DeviceManagementAPI\DeviceManagementAPI.Tests\bin\Debug\net9.0\YamlDotNet.dll
 C:\Users\ArashZandJahangiri\Downloads\InterviewSampleCode\DeviceManagementAPI\DeviceManagementAPI.Tests\bin\Debug\net9.0\DeviceManagementAPI.dll
 C:\Users\ArashZandJahangiri\Downloads\InterviewSampleCode\DeviceManagementAPI\DeviceManagementAPI.Tests\bin\Debug\net9.0\DeviceManagementAPI.pdb
+C:\Users\ArashZandJahangiri\Downloads\InterviewSampleCode\DeviceManagementAPI\DeviceManagementAPI.Tests\obj\Debug\net9.0\DeviceManagementAPI.Tests.sourcelink.json
