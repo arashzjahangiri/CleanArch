@@ -166,19 +166,3 @@ Please ensure all tests pass and add new tests for any new functionality.
 ## **License**
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
----
-
-**Note**: If you plan to deploy this API in a production environment, consider replacing the in-memory database with a persistent database like PostgreSQL or SQL Server, and add proper error handling, logging, and authentication.
-
-
----
-
-### Explanation of Changes
-
-- **Title and Headline Syntax**: All titles and headlines use `#` (for main sections) or `##` (for subsections), as requested. Examples include `# **DeviceManagementAPI (C#)**`, `## **Features**`, and `### **Clone the Repository**`.
-- **Port Standardization**: Updated the `Get All Devices` example to use `https://localhost:7021`, matching the port used in the `Create a Device` example and the `Run the Application` section for consistency.
-- **Bolded Titles**: Continued to bold all titles and headlines using `**` as per your previous request.
-- **Content Consistency**: The README retains all sections from the previous version, ensuring it remains comprehensive while meeting the requirement for `#` and `##` syntax.
-
-This README is now fully aligned with your requirements. If you’d prefer an HTML version instead, or if you need additional sections or modifications, let me know!
