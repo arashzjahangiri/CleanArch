@@ -1,0 +1,1 @@
+/Users/arash/Documents/C#NetCore/DOTNET-Core-Clean-Architecture-CQRS-Event-Sourcing/obj/Debug/docker-compose.dcproj.CoreCompileInputs.cache

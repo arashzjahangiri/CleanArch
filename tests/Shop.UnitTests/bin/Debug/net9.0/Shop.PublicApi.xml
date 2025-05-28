@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Shop.PublicApi</name>
+    </assembly>
+    <members>
+        <member name="M:Shop.PublicApi.Controllers.V1.CustomersController.Create(Shop.Application.Customer.Commands.CreateCustomerCommand)">
+            <summary>
+            Register a new customer.
+            </summary>
+            <response code="201">Returns the Id of the new client.</response>
+            <response code="400">Returns list of errors if the request is invalid.</response>
+            <response code="500">When an unexpected internal error occurs on the server.</response>
+        </member>
+        <member name="M:Shop.PublicApi.Controllers.V1.CustomersController.Update(Shop.Application.Customer.Commands.UpdateCustomerCommand)">
+            <summary>
+            Updates an existing client.
+            </summary>
+            <response code="200">Returns the response with the success message.</response>
+            <response code="400">Returns list of errors if the request is invalid.</response>
+            <response code="404">When no client is found by the given Id.</response>
+            <response code="500">When an unexpected internal error occurs on the server.</response>
+        </member>
+        <member name="M:Shop.PublicApi.Controllers.V1.CustomersController.Delete(System.Guid)">
+            <summary>
+            Deletes the client by Id.
+            </summary>
+            <response code="200">Returns the response with the success message.</response>
+            <response code="400">Returns list of errors if the request is invalid.</response>
+            <response code="404">When no client is found by the given Id.</response>
+            <response code="500">When an unexpected internal error occurs on the server.</response>
+        </member>
+        <member name="M:Shop.PublicApi.Controllers.V1.CustomersController.GetById(System.Guid)">
+            <summary>
+            Gets the client by Id.
+            </summary>
+            <response code="200">Returns the client.</response>
+            <response code="400">Returns list of errors if the request is invalid.</response>
+            <response code="404">When no client is found by the given Id.</response>
+            <response code="500">When an unexpected internal error occurs on the server.</response>
+        </member>
+        <member name="M:Shop.PublicApi.Controllers.V1.CustomersController.GetAll">
+            <summary>
+            Gets a list of all customers.
+            </summary>
+            <response code="200">Returns the list of clients.</response>
+            <response code="500">When an unexpected internal error occurs on the server.</response>
+        </member>
+        <member name="M:Shop.PublicApi.Extensions.ResultExtensions.ToActionResult(Ardalis.Result.Result)">
+            <summary>
+            Converts a custom Result object to an IActionResult.
+            </summary>
+            <param name="result">The Result object to convert.</param>
+            <returns>An IActionResult representing the Result object.</returns>
+        </member>
+        <member name="M:Shop.PublicApi.Extensions.ResultExtensions.ToActionResult``1(Ardalis.Result.Result{``0})">
+            <summary>
+            Converts a <see cref="T:Ardalis.Result.Result`1"/> to an <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult"/>.
+            </summary>
+            <typeparam name="T">The type of the result value.</typeparam>
+            <param name="result">The result to convert.</param>
+            <returns>An <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult"/> representing the result.</returns>
+        </member>
+        <member name="T:Shop.PublicApi.Migrations.Initial">
+            <inheritdoc />
+        </member>
+        <member name="M:Shop.PublicApi.Migrations.Initial.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Shop.PublicApi.Migrations.Initial.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Shop.PublicApi.Migrations.Initial.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:Shop.PublicApi.Migrations.EF_Update">
+            <inheritdoc />
+        </member>
+        <member name="M:Shop.PublicApi.Migrations.EF_Update.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Shop.PublicApi.Migrations.EF_Update.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Shop.PublicApi.Migrations.EF_Update.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:Shop.PublicApi.Migrations.EventStoreDb.EventStore">
+            <inheritdoc />
+        </member>
+        <member name="M:Shop.PublicApi.Migrations.EventStoreDb.EventStore.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Shop.PublicApi.Migrations.EventStoreDb.EventStore.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Shop.PublicApi.Migrations.EventStoreDb.EventStore.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:Shop.PublicApi.Migrations.EventStoreDb.EF_Update">
+            <inheritdoc />
+        </member>
+        <member name="M:Shop.PublicApi.Migrations.EventStoreDb.EF_Update.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Shop.PublicApi.Migrations.EventStoreDb.EF_Update.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Shop.PublicApi.Migrations.EventStoreDb.EF_Update.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

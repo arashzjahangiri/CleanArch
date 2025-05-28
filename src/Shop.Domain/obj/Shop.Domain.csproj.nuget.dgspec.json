@@ -1,0 +1,437 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/arash/Documents/C#NetCore/CleanArch/src/Shop.Domain/Shop.Domain.csproj": {}
+  },
+  "projects": {
+    "/Users/arash/Documents/C#NetCore/CleanArch/src/Shop.Core/Shop.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/arash/Documents/C#NetCore/CleanArch/src/Shop.Core/Shop.Core.csproj",
+        "projectName": "Shop.Core",
+        "projectPath": "/Users/arash/Documents/C#NetCore/CleanArch/src/Shop.Core/Shop.Core.csproj",
+        "packagesPath": "/Users/arash/.nuget/packages/",
+        "outputPath": "/Users/arash/Documents/C#NetCore/CleanArch/src/Shop.Core/obj/",
+        "projectStyle": "PackageReference",
+        "centralPackageVersionsManagementEnabled": true,
+        "centralPackageFloatingVersionsEnabled": true,
+        "CentralPackageTransitivePinningEnabled": true,
+        "configFilePaths": [
+          "/Users/arash/Documents/C#NetCore/CleanArch/NuGet.Config",
+          "/Users/arash/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "allWarningsAsErrors": true,
+          "noWarn": [
+            "NU1507"
+          ],
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "MediatR": {
+              "target": "Package",
+              "version": "[12.5.*, )",
+              "versionCentrallyManaged": true
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.*, )",
+              "versionCentrallyManaged": true
+            },
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[9.*, )",
+              "versionCentrallyManaged": true
+            },
+            "Microsoft.Extensions.Configuration.Abstractions": {
+              "target": "Package",
+              "version": "[9.*, )",
+              "versionCentrallyManaged": true
+            },
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[9.*, )",
+              "versionCentrallyManaged": true
+            },
+            "Microsoft.Extensions.DependencyInjection.Abstractions": {
+              "target": "Package",
+              "version": "[9.*, )",
+              "versionCentrallyManaged": true
+            },
+            "Microsoft.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[9.*, )",
+              "versionCentrallyManaged": true
+            },
+            "Microsoft.Extensions.Hosting.Abstractions": {
+              "target": "Package",
+              "version": "[9.*, )",
+              "versionCentrallyManaged": true
+            },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[9.*, )",
+              "versionCentrallyManaged": true
+            },
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[9.*, )",
+              "versionCentrallyManaged": true
+            },
+            "Microsoft.Extensions.Options": {
+              "target": "Package",
+              "version": "[9.*, )",
+              "versionCentrallyManaged": true
+            },
+            "Microsoft.Extensions.Options.ConfigurationExtensions": {
+              "target": "Package",
+              "version": "[9.*, )",
+              "versionCentrallyManaged": true
+            },
+            "Microsoft.Extensions.Options.DataAnnotations": {
+              "target": "Package",
+              "version": "[9.*, )",
+              "versionCentrallyManaged": true
+            },
+            "Microsoft.Extensions.Primitives": {
+              "target": "Package",
+              "version": "[9.*, )",
+              "versionCentrallyManaged": true
+            },
+            "Roslynator.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[4.*, )",
+              "versionCentrallyManaged": true
+            },
+            "Roslynator.CodeAnalysis.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[4.*, )",
+              "versionCentrallyManaged": true
+            },
+            "Roslynator.CodeFixes": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[4.*, )",
+              "versionCentrallyManaged": true
+            },
+            "Roslynator.Formatting.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[4.*, )",
+              "versionCentrallyManaged": true
+            },
+            "Roslynator.Refactorings": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[4.*, )",
+              "versionCentrallyManaged": true
+            },
+            "System.Configuration.ConfigurationManager": {
+              "target": "Package",
+              "version": "[9.0.*, )",
+              "versionCentrallyManaged": true
+            },
+            "System.Text.Json": {
+              "target": "Package",
+              "version": "[9.0.*, )",
+              "versionCentrallyManaged": true
+            }
+          },
+          "centralPackageVersions": {
+            "Ardalis.Result": "10.1.*",
+            "Ardalis.Result.FluentValidation": "10.1.*",
+            "Asp.Versioning.Mvc": "8.1.*",
+            "Asp.Versioning.Mvc.ApiExplorer": "8.1.*",
+            "AspNetCore.HealthChecks.MongoDb": "9.*",
+            "AspNetCore.HealthChecks.Redis": "9.*",
+            "AspNetCore.HealthChecks.UI.Client": "9.*",
+            "AutoMapper": "14.0.0",
+            "Bogus": "35.6.*",
+            "CorrelationId": "3.0.*",
+            "coverlet.collector": "6.0.*",
+            "coverlet.msbuild": "6.0.*",
+            "FluentAssertions": "7.1.0",
+            "FluentValidation": "12.*",
+            "FluentValidation.DependencyInjectionExtensions": "12.*",
+            "MediatR": "12.5.*",
+            "Microsoft.AspNetCore.Mvc.Testing": "9.*",
+            "Microsoft.AspNetCore.OpenApi": "9.*",
+            "Microsoft.EntityFrameworkCore": "9.*",
+            "Microsoft.EntityFrameworkCore.Analyzers": "9.*",
+            "Microsoft.EntityFrameworkCore.Design": "9.*",
+            "Microsoft.EntityFrameworkCore.InMemory": "9.*",
+            "Microsoft.EntityFrameworkCore.Relational": "9.*",
+            "Microsoft.EntityFrameworkCore.Sqlite": "9.*",
+            "Microsoft.EntityFrameworkCore.SqlServer": "9.*",
+            "Microsoft.EntityFrameworkCore.Tools": "9.*",
+            "Microsoft.Extensions.Caching.StackExchangeRedis": "9.*",
+            "Microsoft.Extensions.Configuration": "9.*",
+            "Microsoft.Extensions.Configuration.Abstractions": "9.*",
+            "Microsoft.Extensions.DependencyInjection": "9.*",
+            "Microsoft.Extensions.DependencyInjection.Abstractions": "9.*",
+            "Microsoft.Extensions.Diagnostics.HealthChecks": "9.*",
+            "Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore": "9.*",
+            "Microsoft.Extensions.Hosting": "9.*",
+            "Microsoft.Extensions.Hosting.Abstractions": "9.*",
+            "Microsoft.Extensions.Http": "9.*",
+            "Microsoft.Extensions.Identity.Core": "9.*",
+            "Microsoft.Extensions.Logging.Abstractions": "9.*",
+            "Microsoft.Extensions.Options": "9.*",
+            "Microsoft.Extensions.Options.ConfigurationExtensions": "9.*",
+            "Microsoft.Extensions.Options.DataAnnotations": "9.*",
+            "Microsoft.Extensions.Primitives": "9.*",
+            "Microsoft.NET.Test.Sdk": "17.*",
+            "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.21.*",
+            "MiniProfiler.AspNetCore.Mvc": "4.5.*",
+            "MiniProfiler.EntityFrameworkCore": "4.5.*",
+            "MongoDB.Bson": "3.4.*",
+            "MongoDB.Driver": "3.4.*",
+            "NSubstitute": "5.3.*",
+            "NSubstitute.Analyzers.CSharp": "1.0.*",
+            "Polly": "8.5.*",
+            "Roslynator.Analyzers": "4.*",
+            "Roslynator.CodeAnalysis.Analyzers": "4.*",
+            "Roslynator.CodeFixes": "4.*",
+            "Roslynator.Formatting.Analyzers": "4.*",
+            "Roslynator.Refactorings": "4.*",
+            "Scalar.AspNetCore": "2.*",
+            "System.Configuration.ConfigurationManager": "9.0.*",
+            "System.Text.Json": "9.0.*",
+            "System.Text.RegularExpressions": "4.3.*",
+            "xunit": "2.9.*",
+            "xunit.analyzers": "1.21.*",
+            "xunit.categories": "3.0.*",
+            "xunit.runner.visualstudio": "3.1.*"
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.300/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/arash/Documents/C#NetCore/CleanArch/src/Shop.Domain/Shop.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/arash/Documents/C#NetCore/CleanArch/src/Shop.Domain/Shop.Domain.csproj",
+        "projectName": "Shop.Domain",
+        "projectPath": "/Users/arash/Documents/C#NetCore/CleanArch/src/Shop.Domain/Shop.Domain.csproj",
+        "packagesPath": "/Users/arash/.nuget/packages/",
+        "outputPath": "/Users/arash/Documents/C#NetCore/CleanArch/src/Shop.Domain/obj/",
+        "projectStyle": "PackageReference",
+        "centralPackageVersionsManagementEnabled": true,
+        "centralPackageFloatingVersionsEnabled": true,
+        "CentralPackageTransitivePinningEnabled": true,
+        "configFilePaths": [
+          "/Users/arash/Documents/C#NetCore/CleanArch/NuGet.Config",
+          "/Users/arash/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {
+              "/Users/arash/Documents/C#NetCore/CleanArch/src/Shop.Core/Shop.Core.csproj": {
+                "projectPath": "/Users/arash/Documents/C#NetCore/CleanArch/src/Shop.Core/Shop.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "allWarningsAsErrors": true,
+          "noWarn": [
+            "NU1507"
+          ],
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "Ardalis.Result": {
+              "target": "Package",
+              "version": "[10.1.*, )",
+              "versionCentrallyManaged": true
+            },
+            "Roslynator.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[4.*, )",
+              "versionCentrallyManaged": true
+            },
+            "Roslynator.CodeAnalysis.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[4.*, )",
+              "versionCentrallyManaged": true
+            },
+            "Roslynator.CodeFixes": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[4.*, )",
+              "versionCentrallyManaged": true
+            },
+            "Roslynator.Formatting.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[4.*, )",
+              "versionCentrallyManaged": true
+            },
+            "Roslynator.Refactorings": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[4.*, )",
+              "versionCentrallyManaged": true
+            }
+          },
+          "centralPackageVersions": {
+            "Ardalis.Result": "10.1.*",
+            "Ardalis.Result.FluentValidation": "10.1.*",
+            "Asp.Versioning.Mvc": "8.1.*",
+            "Asp.Versioning.Mvc.ApiExplorer": "8.1.*",
+            "AspNetCore.HealthChecks.MongoDb": "9.*",
+            "AspNetCore.HealthChecks.Redis": "9.*",
+            "AspNetCore.HealthChecks.UI.Client": "9.*",
+            "AutoMapper": "14.0.0",
+            "Bogus": "35.6.*",
+            "CorrelationId": "3.0.*",
+            "coverlet.collector": "6.0.*",
+            "coverlet.msbuild": "6.0.*",
+            "FluentAssertions": "7.1.0",
+            "FluentValidation": "12.*",
+            "FluentValidation.DependencyInjectionExtensions": "12.*",
+            "MediatR": "12.5.*",
+            "Microsoft.AspNetCore.Mvc.Testing": "9.*",
+            "Microsoft.AspNetCore.OpenApi": "9.*",
+            "Microsoft.EntityFrameworkCore": "9.*",
+            "Microsoft.EntityFrameworkCore.Analyzers": "9.*",
+            "Microsoft.EntityFrameworkCore.Design": "9.*",
+            "Microsoft.EntityFrameworkCore.InMemory": "9.*",
+            "Microsoft.EntityFrameworkCore.Relational": "9.*",
+            "Microsoft.EntityFrameworkCore.Sqlite": "9.*",
+            "Microsoft.EntityFrameworkCore.SqlServer": "9.*",
+            "Microsoft.EntityFrameworkCore.Tools": "9.*",
+            "Microsoft.Extensions.Caching.StackExchangeRedis": "9.*",
+            "Microsoft.Extensions.Configuration": "9.*",
+            "Microsoft.Extensions.Configuration.Abstractions": "9.*",
+            "Microsoft.Extensions.DependencyInjection": "9.*",
+            "Microsoft.Extensions.DependencyInjection.Abstractions": "9.*",
+            "Microsoft.Extensions.Diagnostics.HealthChecks": "9.*",
+            "Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore": "9.*",
+            "Microsoft.Extensions.Hosting": "9.*",
+            "Microsoft.Extensions.Hosting.Abstractions": "9.*",
+            "Microsoft.Extensions.Http": "9.*",
+            "Microsoft.Extensions.Identity.Core": "9.*",
+            "Microsoft.Extensions.Logging.Abstractions": "9.*",
+            "Microsoft.Extensions.Options": "9.*",
+            "Microsoft.Extensions.Options.ConfigurationExtensions": "9.*",
+            "Microsoft.Extensions.Options.DataAnnotations": "9.*",
+            "Microsoft.Extensions.Primitives": "9.*",
+            "Microsoft.NET.Test.Sdk": "17.*",
+            "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.21.*",
+            "MiniProfiler.AspNetCore.Mvc": "4.5.*",
+            "MiniProfiler.EntityFrameworkCore": "4.5.*",
+            "MongoDB.Bson": "3.4.*",
+            "MongoDB.Driver": "3.4.*",
+            "NSubstitute": "5.3.*",
+            "NSubstitute.Analyzers.CSharp": "1.0.*",
+            "Polly": "8.5.*",
+            "Roslynator.Analyzers": "4.*",
+            "Roslynator.CodeAnalysis.Analyzers": "4.*",
+            "Roslynator.CodeFixes": "4.*",
+            "Roslynator.Formatting.Analyzers": "4.*",
+            "Roslynator.Refactorings": "4.*",
+            "Scalar.AspNetCore": "2.*",
+            "System.Configuration.ConfigurationManager": "9.0.*",
+            "System.Text.Json": "9.0.*",
+            "System.Text.RegularExpressions": "4.3.*",
+            "xunit": "2.9.*",
+            "xunit.analyzers": "1.21.*",
+            "xunit.categories": "3.0.*",
+            "xunit.runner.visualstudio": "3.1.*"
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.300/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "Shop.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/Users\/arash\/Documents\/C#NetCore\/CleanArch\/src\/Shop.Application",
+  "Shop.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/Users\/arash\/Documents\/C#NetCore\/CleanArch\/src\/Shop.Core",
+  "Shop.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/Users\/arash\/Documents\/C#NetCore\/CleanArch\/src\/Shop.Domain",
+  "Shop.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/Users\/arash\/Documents\/C#NetCore\/CleanArch\/src\/Shop.Infrastructure",
+  "Shop.PublicApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/Users\/arash\/Documents\/C#NetCore\/CleanArch\/src\/Shop.PublicApi",
+  "Shop.Query, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/Users\/arash\/Documents\/C#NetCore\/CleanArch\/src\/Shop.Query"
+}

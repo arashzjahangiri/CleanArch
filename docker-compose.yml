@@ -1,0 +1,80 @@
+networks:
+  app-network:
+    driver: bridge
+
+services:
+  # ASP.NET Core Web API Application
+  shop-webapi:
+    image: ${DOCKER_REGISTRY-}shop-webapi
+    container_name: shop-webapi
+    restart: always
+    build:
+      context: .
+      dockerfile: src/Shop.PublicApi/Dockerfile
+    expose:
+      - 80
+    links:
+      - shop-sql-server
+      - shop-mongo-server
+      - shop-redis
+    networks:
+      - app-network
+    depends_on:
+      - shop-sql-server
+      - shop-mongo-server 
+      - shop-redis
+
+  # SQL Server
+  shop-sql-server:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    cap_add: ["SYS_PTRACE"]
+    hostname: mssql
+    container_name: shop-sql-server
+    restart: always
+    expose:
+      - 1433
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=pMA63033n6tF
+      - MSSQL_PID=Developer
+      - MSSQL_COLLATION=Latin1_General_CI_AI
+    networks:
+      - app-network
+    volumes:
+      - "./data-mssql:/var/opt/mssql/data"
+
+  # MongoDB Server
+  shop-mongo-server:
+    image: mongo:latest
+    container_name: shop-mongo-server
+    restart: always
+    expose:
+      - 27017
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+
+  # Redis Cache Server
+  shop-redis:
+    image: redis:latest
+    container_name: shop-redis
+    command: redis-server --requirepass pMA63033n6tF
+    restart: always
+    expose:
+      - 6379
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+    volumes:
+      - "./data-mongo:/data/db"
+
+volumes:
+  data-mssql:
+    external: true
+
+  data-mongo:
+    external: true
