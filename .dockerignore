@@ -1,0 +1,52 @@
+# Keep the build context small: the Dockerfile restores and publishes from
+# source, so anything built locally would only be copied in and thrown away.
+
+# Build output
+**/bin/
+**/obj/
+**/out/
+**/[Dd]ebug/
+**/[Rr]elease/
+**/TestResults/
+**/coverage*.xml
+**/coverage*.json
+
+# Version control
+.git/
+.gitignore
+.gitattributes
+.github/
+
+# IDE and editor
+.vs/
+.vscode/
+.idea/
+**/*.user
+**/*.suo
+**/*.userprefs
+*.sln.docstates
+
+# OS noise
+.DS_Store
+**/.DS_Store
+Thumbs.db
+
+# Docker (the image never builds itself)
+Dockerfile*
+**/Dockerfile*
+.dockerignore
+docker-compose*.yml
+docker-compose.dcproj
+
+# Runtime database state from docker-compose bind mounts
+data-mssql/
+data-mongo/
+data-redis/
+
+# Docs and local scratch
+README.md
+LICENSE
+img/
+requests.http
+launchSettings.json
+**/secrets.json
