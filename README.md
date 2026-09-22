@@ -44,10 +44,17 @@ Segregation) on .NET 9, with the write side on SQL Server and the read side on M
 
 ## Running the application
 
-Copy `.env.example` to `.env` and set your own passwords:
+Copy `.env.example` to `.env`, then open it and replace the placeholder passwords with your own.
+Compose refuses to start until both variables have a value, and `.env` is git-ignored.
 
 ```bash
+# Linux / macOS
 cp .env.example .env
+```
+
+```powershell
+# Windows (PowerShell)
+Copy-Item .env.example .env
 ```
 
 Then build and start everything:
