@@ -25,16 +25,16 @@ public class CustomerEventHandler(
         LogEvent(notification);
 
         var customerQueryModel = notification.ToQueryModel();
-        await synchronizeDb.UpsertAsync(customerQueryModel, filter => filter.Id == customerQueryModel.Id);
-        await ClearCacheAsync(notification);
+        await synchronizeDb.UpsertAsync(customerQueryModel, filter => filter.Id == customerQueryModel.Id, cancellationToken);
+        await ClearCacheAsync(notification, cancellationToken);
     }
 
     public async Task Handle(CustomerDeletedEvent notification, CancellationToken cancellationToken)
     {
         LogEvent(notification);
 
-        await synchronizeDb.DeleteAsync<CustomerQueryModel>(filter => filter.Email == notification.Email);
-        await ClearCacheAsync(notification);
+        await synchronizeDb.DeleteAsync<CustomerQueryModel>(filter => filter.Email == notification.Email, cancellationToken);
+        await ClearCacheAsync(notification, cancellationToken);
     }
 
     public async Task Handle(CustomerUpdatedEvent notification, CancellationToken cancellationToken)
@@ -42,14 +42,14 @@ public class CustomerEventHandler(
         LogEvent(notification);
 
         var customerQueryModel = notification.ToQueryModel();
-        await synchronizeDb.UpsertAsync(customerQueryModel, filter => filter.Id == customerQueryModel.Id);
-        await ClearCacheAsync(notification);
+        await synchronizeDb.UpsertAsync(customerQueryModel, filter => filter.Id == customerQueryModel.Id, cancellationToken);
+        await ClearCacheAsync(notification, cancellationToken);
     }
 
-    private async Task ClearCacheAsync(CustomerBaseEvent @event)
+    private async Task ClearCacheAsync(CustomerBaseEvent @event, CancellationToken cancellationToken)
     {
         var cacheKeys = new[] { nameof(GetAllCustomerQuery), $"{nameof(GetCustomerByIdQuery)}_{@event.Id}" };
-        await cacheService.RemoveAsync(cacheKeys);
+        await cacheService.RemoveAsync(cacheKeys, cancellationToken);
     }
 
     private void LogEvent<TEvent>(TEvent @event) where TEvent : CustomerBaseEvent =>

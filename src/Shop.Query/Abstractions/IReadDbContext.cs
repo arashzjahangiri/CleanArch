@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using MongoDB.Driver;
 
@@ -25,5 +26,5 @@ public interface IReadDbContext : IDisposable
     /// Creates collections in the database for all query models.
     /// </summary>
     /// <returns>A task representing the asynchronous creation of collections.</returns>
-    Task CreateCollectionsAsync();
+    Task CreateCollectionsAsync(CancellationToken cancellationToken = default);
 }

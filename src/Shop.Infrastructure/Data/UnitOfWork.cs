@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,7 @@ internal sealed class UnitOfWork(
     /// <summary>
     /// Saves changes asynchronously.
     /// </summary>
-    public async Task SaveChangesAsync()
+    public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         // Creating the execution strategy (Connection resiliency and database retries).
         var strategy = writeDbContext.Database.CreateExecutionStrategy();
@@ -29,7 +30,7 @@ internal sealed class UnitOfWork(
         // Executing the strategy.
         await strategy.ExecuteAsync(async () =>
         {
-            await using var transaction = await writeDbContext.Database.BeginTransactionAsync(IsolationLevel.ReadCommitted);
+            await using var transaction = await writeDbContext.Database.BeginTransactionAsync(IsolationLevel.ReadCommitted, cancellationToken);
 
             logger.LogInformation("----- Begin transaction: '{TransactionId}'", transaction.TransactionId);
 
@@ -38,14 +39,14 @@ internal sealed class UnitOfWork(
                 // Getting the domain events and event stores from the tracked entities in the EF Core context.
                 var (domainEvents, eventStores) = BeforeSaveChanges();
 
-                var rowsAffected = await writeDbContext.SaveChangesAsync();
+                var rowsAffected = await writeDbContext.SaveChangesAsync(cancellationToken);
 
                 logger.LogInformation("----- Commit transaction: '{TransactionId}'", transaction.TransactionId);
 
-                await transaction.CommitAsync();
+                await transaction.CommitAsync(cancellationToken);
 
                 // Triggering the events and saving the stores.
-                await AfterSaveChangesAsync(domainEvents, eventStores);
+                await AfterSaveChangesAsync(domainEvents, eventStores, cancellationToken);
 
                 logger.LogInformation(
                     "----- Transaction successfully confirmed: '{TransactionId}', Rows Affected: {RowsAffected}",
@@ -60,7 +61,7 @@ internal sealed class UnitOfWork(
                     transaction.TransactionId,
                     ex.Message);
 
-                await transaction.RollbackAsync();
+                await transaction.RollbackAsync(cancellationToken);
 
                 throw;
             }
@@ -103,15 +104,16 @@ internal sealed class UnitOfWork(
     /// <returns>A task representing the asynchronous operation.</returns>
     private async Task AfterSaveChangesAsync(
         IReadOnlyList<BaseEvent> domainEvents,
-        IReadOnlyList<EventStore> eventStores)
+        IReadOnlyList<EventStore> eventStores,
+        CancellationToken cancellationToken)
     {
         // Publish each domain event using _mediator.
         if (domainEvents.Count > 0)
-            await Task.WhenAll(domainEvents.Select(@event => mediator.Publish(@event)));
+            await Task.WhenAll(domainEvents.Select(@event => mediator.Publish(@event, cancellationToken)));
 
         // Store the event stores using _eventStoreRepository.
         if (eventStores.Count > 0)
-            await eventStoreRepository.StoreAsync(eventStores);
+            await eventStoreRepository.StoreAsync(eventStores, cancellationToken);
     }
 
 }

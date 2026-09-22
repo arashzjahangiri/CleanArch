@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -58,10 +59,10 @@ public sealed class NoSqlDbContext : IReadDbContext, ISynchronizeDb
     public IMongoCollection<TQueryModel> GetCollection<TQueryModel>() where TQueryModel : IQueryModel =>
         _mongoDatabase.GetCollection<TQueryModel>(typeof(TQueryModel).Name);
 
-    public async Task CreateCollectionsAsync()
+    public async Task CreateCollectionsAsync(CancellationToken cancellationToken = default)
     {
-        using var asyncCursor = await _mongoDatabase.ListCollectionNamesAsync();
-        var collections = await asyncCursor.ToListAsync();
+        using var asyncCursor = await _mongoDatabase.ListCollectionNamesAsync(cancellationToken: cancellationToken);
+        var collections = await asyncCursor.ToListAsync(cancellationToken);
 
         foreach (var collectionName in GetCollectionNamesFromAssembly())
         {
@@ -73,7 +74,7 @@ public sealed class NoSqlDbContext : IReadDbContext, ISynchronizeDb
                 await _mongoDatabase.CreateCollectionAsync(collectionName, new CreateCollectionOptions
                 {
                     ValidationLevel = DocumentValidationLevel.Strict
-                });
+                }, cancellationToken);
             }
             else
             {
@@ -81,10 +82,10 @@ public sealed class NoSqlDbContext : IReadDbContext, ISynchronizeDb
             }
         }
 
-        await CreateIndexAsync();
+        await CreateIndexAsync(cancellationToken);
     }
 
-    private async Task CreateIndexAsync()
+    private async Task CreateIndexAsync(CancellationToken cancellationToken)
     {
         _logger.LogInformation("----- MongoDB: creating indexes...");
 
@@ -96,7 +97,7 @@ public sealed class NoSqlDbContext : IReadDbContext, ISynchronizeDb
 
         var collection = GetCollection<CustomerQueryModel>();
 
-        var indexName = await collection.Indexes.CreateOneAsync(indexModel);
+        var indexName = await collection.Indexes.CreateOneAsync(indexModel, cancellationToken: cancellationToken);
 
         _logger.LogInformation("----- MongoDB: indexes successfully created - {indexName}", indexName);
     }
@@ -112,20 +113,28 @@ public sealed class NoSqlDbContext : IReadDbContext, ISynchronizeDb
 
     #region ISynchronizeDb
 
-    public async Task UpsertAsync<TQueryModel>(TQueryModel queryModel, Expression<Func<TQueryModel, bool>> upsertFilter)
+    public async Task UpsertAsync<TQueryModel>(
+        TQueryModel queryModel,
+        Expression<Func<TQueryModel, bool>> upsertFilter,
+        CancellationToken cancellationToken = default)
         where TQueryModel : IQueryModel
     {
         var collection = GetCollection<TQueryModel>();
 
-        await _mongoRetryPolicy.ExecuteAsync(async () =>
-            await collection.ReplaceOneAsync(upsertFilter, queryModel, DefaultReplaceOptions));
+        await _mongoRetryPolicy.ExecuteAsync(
+            async ct => await collection.ReplaceOneAsync(upsertFilter, queryModel, DefaultReplaceOptions, ct),
+            cancellationToken);
     }
 
-    public async Task DeleteAsync<TQueryModel>(Expression<Func<TQueryModel, bool>> deleteFilter)
+    public async Task DeleteAsync<TQueryModel>(
+        Expression<Func<TQueryModel, bool>> deleteFilter,
+        CancellationToken cancellationToken = default)
         where TQueryModel : IQueryModel
     {
         var collection = GetCollection<TQueryModel>();
-        await _mongoRetryPolicy.ExecuteAsync(async () => await collection.DeleteOneAsync(deleteFilter));
+        await _mongoRetryPolicy.ExecuteAsync(
+            async ct => await collection.DeleteOneAsync(deleteFilter, ct),
+            cancellationToken);
     }
 
     private static AsyncRetryPolicy CreateRetryPolicy(ILogger logger) =>

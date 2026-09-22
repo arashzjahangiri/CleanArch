@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using MongoDB.Driver;
 using Shop.Query.Abstractions;
@@ -11,7 +12,7 @@ namespace Shop.Query.Data.Repositories;
 internal class CustomerReadOnlyRepository(IReadDbContext readDbContext)
     : BaseReadOnlyRepository<CustomerQueryModel, Guid>(readDbContext), ICustomerReadOnlyRepository
 {
-    public async Task<IEnumerable<CustomerQueryModel>> GetAllAsync()
+    public async Task<IEnumerable<CustomerQueryModel>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         var sort = Builders<CustomerQueryModel>.Sort
             .Ascending(customer => customer.FirstName)
@@ -22,7 +23,7 @@ internal class CustomerReadOnlyRepository(IReadDbContext readDbContext)
             Sort = sort
         };
 
-        using var asyncCursor = await Collection.FindAsync(Builders<CustomerQueryModel>.Filter.Empty, findOptions);
-        return await asyncCursor.ToListAsync();
+        using var asyncCursor = await Collection.FindAsync(Builders<CustomerQueryModel>.Filter.Empty, findOptions, cancellationToken);
+        return await asyncCursor.ToListAsync(cancellationToken);
     }
 }

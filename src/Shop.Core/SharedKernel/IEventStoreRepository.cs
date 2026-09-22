@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Shop.Core.SharedKernel;
@@ -13,5 +14,5 @@ public interface IEventStoreRepository
     /// </summary>
     /// <param name="eventStores">The event stores to store.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    Task StoreAsync(IEnumerable<EventStore> eventStores);
+    Task StoreAsync(IEnumerable<EventStore> eventStores, CancellationToken cancellationToken = default);
 }

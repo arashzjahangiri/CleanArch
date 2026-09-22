@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Shop.Core.SharedKernel;
@@ -35,5 +36,5 @@ public interface IWriteOnlyRepository<TEntity, in TKey>
     /// </summary>
     /// <param name="id">The ID of the entity to retrieve.</param>
     /// <returns>The retrieved entity.</returns>
-    Task<TEntity> GetByIdAsync(TKey id);
+    Task<TEntity> GetByIdAsync(TKey id, CancellationToken cancellationToken = default);
 }

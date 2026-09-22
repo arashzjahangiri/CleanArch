@@ -39,7 +39,7 @@ public class CreateCustomerCommandHandler(
         var email = emailResult.Value;
 
         // Checking if a customer with the email address already exists.
-        if (await repository.ExistsByEmailAsync(email))
+        if (await repository.ExistsByEmailAsync(email, cancellationToken))
             return Result<CreatedCustomerResponse>.Error("The provided email address is already in use.");
 
         // Creating an instance of the customer entity.
@@ -55,7 +55,7 @@ public class CreateCustomerCommandHandler(
         repository.Add(customer);
 
         // Saving changes to the database and triggering events.
-        await unitOfWork.SaveChangesAsync();
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
         // Returning the ID.
         return Result<CreatedCustomerResponse>.Created(

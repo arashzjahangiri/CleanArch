@@ -1,5 +1,6 @@
 using System;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Shop.Query.Abstractions;
@@ -16,7 +17,7 @@ public interface ISynchronizeDb : IDisposable
     /// <param name="queryModel">The query model to upsert.</param>
     /// <param name="upsertFilter">The filter expression to determine the upsert condition.</param>
     /// <returns>A task representing the asynchronous upsert operation.</returns>
-    Task UpsertAsync<TQueryModel>(TQueryModel queryModel, Expression<Func<TQueryModel, bool>> upsertFilter)
+    Task UpsertAsync<TQueryModel>(TQueryModel queryModel, Expression<Func<TQueryModel, bool>> upsertFilter, CancellationToken cancellationToken = default)
         where TQueryModel : IQueryModel;
 
     /// <summary>
@@ -25,6 +26,6 @@ public interface ISynchronizeDb : IDisposable
     /// <typeparam name="TQueryModel">The type of the query model.</typeparam>
     /// <param name="deleteFilter">The filter expression to determine which query models to delete.</param>
     /// <returns>A task representing the asynchronous delete operation.</returns>
-    Task DeleteAsync<TQueryModel>(Expression<Func<TQueryModel, bool>> deleteFilter)
+    Task DeleteAsync<TQueryModel>(Expression<Func<TQueryModel, bool>> deleteFilter, CancellationToken cancellationToken = default)
         where TQueryModel : IQueryModel;
 }

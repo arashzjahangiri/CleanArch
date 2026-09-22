@@ -28,7 +28,7 @@ public class UpdateCustomerCommandHandler(
         }
 
         // Getting the customer from the database.
-        var customer = await repository.GetByIdAsync(request.Id);
+        var customer = await repository.GetByIdAsync(request.Id, cancellationToken);
         if (customer == null)
             return Result.NotFound($"No customer found by Id: {request.Id}");
 
@@ -38,7 +38,7 @@ public class UpdateCustomerCommandHandler(
             return Result.Error(new ErrorList(emailResult.Errors.ToArray()));
 
         // Checking if there is already a customer with the email address.
-        if (await repository.ExistsByEmailAsync(emailResult.Value, customer.Id))
+        if (await repository.ExistsByEmailAsync(emailResult.Value, customer.Id, cancellationToken))
             return Result.Error("The provided email address is already in use.");
 
         // Changing the email in the entity.
@@ -48,7 +48,7 @@ public class UpdateCustomerCommandHandler(
         repository.Update(customer);
 
         // Saving the changes to the database and firing events.
-        await unitOfWork.SaveChangesAsync();
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
         // Returning the success message.
         return Result.SuccessWithMessage("Updated successfully!");

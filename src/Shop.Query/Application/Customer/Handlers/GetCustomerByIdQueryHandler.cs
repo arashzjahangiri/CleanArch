@@ -33,7 +33,7 @@ public class GetCustomerByIdQueryHandler(
 
         // Getting the customer from the cache service. If not found, fetches it from the repository.
         // The customer will be stored in the cache service for future queries.
-        var customer = await cacheService.GetOrCreateAsync(cacheKey, () => repository.GetByIdAsync(request.Id));
+        var customer = await cacheService.GetOrCreateAsync(cacheKey, ct => repository.GetByIdAsync(request.Id, ct), cancellationToken);
 
         // If the customer is null, returns a result indicating that no customer was found.
         // Otherwise, returns a successful result with the customer.

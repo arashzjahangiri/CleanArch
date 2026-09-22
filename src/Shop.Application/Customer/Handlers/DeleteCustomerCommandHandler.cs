@@ -26,7 +26,7 @@ public class DeleteCustomerCommandHandler(
         }
 
         // Retrieving the customer from the database.
-        var customer = await repository.GetByIdAsync(request.Id);
+        var customer = await repository.GetByIdAsync(request.Id, cancellationToken);
         if (customer == null)
             return Result.NotFound($"No customer found by Id: {request.Id}");
 
@@ -37,7 +37,7 @@ public class DeleteCustomerCommandHandler(
         repository.Remove(customer);
 
         // Saving the changes to the database and triggering the events.
-        await unitOfWork.SaveChangesAsync();
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
         // Returning the success message.
         return Result.SuccessWithMessage("Successfully removed!");

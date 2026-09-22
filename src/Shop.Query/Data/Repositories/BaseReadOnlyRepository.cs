@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using MongoDB.Driver;
 using Shop.Query.Abstractions;
@@ -25,9 +26,9 @@ internal abstract class BaseReadOnlyRepository<TQueryModel, Tkey>(IReadDbContext
     /// </summary>
     /// <param name="id">The id of the query model.</param>
     /// <returns>The query model.</returns>
-    public async Task<TQueryModel> GetByIdAsync(Tkey id)
+    public async Task<TQueryModel> GetByIdAsync(Tkey id, CancellationToken cancellationToken = default)
     {
-        using var asyncCursor = await Collection.FindAsync(queryModel => queryModel.Id.Equals(id));
-        return await asyncCursor.FirstOrDefaultAsync();
+        using var asyncCursor = await Collection.FindAsync(queryModel => queryModel.Id.Equals(id), cancellationToken: cancellationToken);
+        return await asyncCursor.FirstOrDefaultAsync(cancellationToken);
     }
 }

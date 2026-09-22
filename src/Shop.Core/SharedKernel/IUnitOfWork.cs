@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Shop.Core.SharedKernel;
@@ -11,5 +12,5 @@ public interface IUnitOfWork
     /// Saves the changes made in the unit of work asynchronously.
     /// </summary>
     /// <returns>A task representing the asynchronous operation.</returns>
-    Task SaveChangesAsync();
+    Task SaveChangesAsync(CancellationToken cancellationToken = default);
 }

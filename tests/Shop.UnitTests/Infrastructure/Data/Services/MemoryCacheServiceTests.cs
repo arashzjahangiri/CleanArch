@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.Extensions.Caching.Memory;
@@ -30,8 +31,8 @@ public class MemoryCacheServiceTests
         var factoryCalls = 0;
 
         // Act
-        var first = await service.GetOrCreateAsync(CacheKey, () => { factoryCalls++; return Task.FromResult("value"); });
-        var second = await service.GetOrCreateAsync(CacheKey, () => { factoryCalls++; return Task.FromResult("value"); });
+        var first = await service.GetOrCreateAsync(CacheKey, _ => { factoryCalls++; return Task.FromResult("value"); });
+        var second = await service.GetOrCreateAsync(CacheKey, _ => { factoryCalls++; return Task.FromResult("value"); });
 
         // Assert
         factoryCalls.Should().Be(1, "the second call must be served from the cache");
@@ -47,8 +48,8 @@ public class MemoryCacheServiceTests
         var factoryCalls = 0;
 
         // Act
-        var first = await service.GetOrCreateAsync(CacheKey, () => { factoryCalls++; return Task.FromResult<string>(null); });
-        var second = await service.GetOrCreateAsync(CacheKey, () => { factoryCalls++; return Task.FromResult("found later"); });
+        var first = await service.GetOrCreateAsync(CacheKey, _ => { factoryCalls++; return Task.FromResult<string>(null); });
+        var second = await service.GetOrCreateAsync(CacheKey, _ => { factoryCalls++; return Task.FromResult("found later"); });
 
         // Assert
         factoryCalls.Should().Be(2, "a missing item must never be cached");
@@ -65,10 +66,10 @@ public class MemoryCacheServiceTests
 
         // Act
         var first = await service.GetOrCreateAsync<string>(
-            CacheKey, () => { factoryCalls++; return Task.FromResult<IReadOnlyList<string>>([]); });
+            CacheKey, _ => { factoryCalls++; return Task.FromResult<IReadOnlyList<string>>([]); });
 
         var second = await service.GetOrCreateAsync<string>(
-            CacheKey, () => { factoryCalls++; return Task.FromResult<IReadOnlyList<string>>(["one"]); });
+            CacheKey, _ => { factoryCalls++; return Task.FromResult<IReadOnlyList<string>>(["one"]); });
 
         // Assert
         factoryCalls.Should().Be(2, "an empty result must never be cached");
@@ -87,7 +88,7 @@ public class MemoryCacheServiceTests
         var service = CreateService(memoryCache);
 
         // Act
-        await service.GetOrCreateAsync(CacheKey, () => Task.FromResult("value"));
+        await service.GetOrCreateAsync(CacheKey, _ => Task.FromResult("value"));
 
         // Assert
         memoryCache.Received(1).CreateEntry(CacheKey);
@@ -103,9 +104,9 @@ public class MemoryCacheServiceTests
         var factoryCalls = 0;
 
         // Act
-        await service.GetOrCreateAsync(CacheKey, () => { factoryCalls++; return Task.FromResult("value"); });
-        await service.RemoveAsync(CacheKey);
-        await service.GetOrCreateAsync(CacheKey, () => { factoryCalls++; return Task.FromResult("value"); });
+        await service.GetOrCreateAsync(CacheKey, _ => { factoryCalls++; return Task.FromResult("value"); });
+        await service.RemoveAsync([CacheKey]);
+        await service.GetOrCreateAsync(CacheKey, _ => { factoryCalls++; return Task.FromResult("value"); });
 
         // Assert
         factoryCalls.Should().Be(2, "removal must evict the entry");

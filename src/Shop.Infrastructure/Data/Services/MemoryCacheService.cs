@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
@@ -23,7 +24,7 @@ internal class MemoryCacheService(
         SlidingExpiration = TimeSpan.FromSeconds(cacheOptions.Value.SlidingExpirationInSeconds)
     };
 
-    public async Task<TItem> GetOrCreateAsync<TItem>(string cacheKey, Func<Task<TItem>> factory)
+    public async Task<TItem> GetOrCreateAsync<TItem>(string cacheKey, Func<CancellationToken, Task<TItem>> factory, CancellationToken cancellationToken = default)
     {
         // GetOrCreateAsync must not be used here: it commits the factory result to an entry that
         // carries no expiration, which both overrides these options and caches absent values.
@@ -33,7 +34,7 @@ internal class MemoryCacheService(
             return cachedItem;
         }
 
-        var item = await factory();
+        var item = await factory(cancellationToken);
         if (!item.IsDefault()) // SonarQube Bug: item != nulll
         {
             logger.LogInformation("----- Added to {CacheServiceName}: '{CacheKey}'", CacheServiceName, cacheKey);
@@ -45,7 +46,8 @@ internal class MemoryCacheService(
 
     public async Task<IReadOnlyList<TItem>> GetOrCreateAsync<TItem>(
         string cacheKey,
-        Func<Task<IReadOnlyList<TItem>>> factory)
+        Func<CancellationToken, Task<IReadOnlyList<TItem>>> factory,
+        CancellationToken cancellationToken = default)
     {
         if (memoryCache.TryGetValue(cacheKey, out IReadOnlyList<TItem> cachedItems))
         {
@@ -53,7 +55,7 @@ internal class MemoryCacheService(
             return cachedItems;
         }
 
-        var items = await factory();
+        var items = await factory(cancellationToken);
         if (items?.Any() == true)
         {
             logger.LogInformation("----- Added to {CacheServiceName}: '{CacheKey}'", CacheServiceName, cacheKey);
@@ -63,7 +65,7 @@ internal class MemoryCacheService(
         return items;
     }
 
-    public Task RemoveAsync(params string[] cacheKeys)
+    public Task RemoveAsync(string[] cacheKeys, CancellationToken cancellationToken = default)
     {
         foreach (var cacheKey in cacheKeys)
         {
