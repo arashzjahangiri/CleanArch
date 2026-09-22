@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -9,7 +9,6 @@
   
   <ItemGroup>
     <PackageReference Include="Ardalis.Result" />
-    <PackageReference Include="AutoMapper" />
     <PackageReference Include="Bogus" />
     <PackageReference Include="coverlet.collector">
       <PrivateAssets>all</PrivateAssets>

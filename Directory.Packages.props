@@ -14,7 +14,6 @@
     <PackageVersion Include="AspNetCore.HealthChecks.MongoDb" Version="9.*" />
     <PackageVersion Include="AspNetCore.HealthChecks.Redis" Version="9.*" />
     <PackageVersion Include="AspNetCore.HealthChecks.UI.Client" Version="9.*" />
-    <PackageVersion Include="AutoMapper" Version="14.0.0" />
     <PackageVersion Include="Bogus" Version="35.6.*" />
     <PackageVersion Include="CorrelationId" Version="3.0.*" />
     <PackageVersion Include="coverlet.collector" Version="6.0.*" />

@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-using AutoMapper;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson;
@@ -27,7 +26,6 @@ public static class ConfigureServices
         var assembly = Assembly.GetAssembly(typeof(IQueryMarker));
         return services
             .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(assembly))
-            .AddSingleton<IMapper>(new Mapper(new MapperConfiguration(cfg => cfg.AddMaps(assembly))))
             .AddValidatorsFromAssembly(assembly);
     }
 

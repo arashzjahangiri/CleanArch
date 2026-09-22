@@ -1,6 +1,5 @@
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Shop.Core.Extensions;
@@ -8,12 +7,12 @@ using Shop.Core.SharedKernel;
 using Shop.Domain.Entities.CustomerAggregate.Events;
 using Shop.Query.Abstractions;
 using Shop.Query.Application.Customer.Queries;
+using Shop.Query.Mappings;
 using Shop.Query.QueriesModel;
 
 namespace Shop.Query.EventHandlers;
 
 public class CustomerEventHandler(
-    IMapper mapper,
     ISynchronizeDb synchronizeDb,
     ICacheService cacheService,
     ILogger<CustomerEventHandler> logger) :
@@ -25,7 +24,7 @@ public class CustomerEventHandler(
     {
         LogEvent(notification);
 
-        var customerQueryModel = mapper.Map<CustomerQueryModel>(notification);
+        var customerQueryModel = notification.ToQueryModel();
         await synchronizeDb.UpsertAsync(customerQueryModel, filter => filter.Id == customerQueryModel.Id);
         await ClearCacheAsync(notification);
     }
@@ -42,7 +41,7 @@ public class CustomerEventHandler(
     {
         LogEvent(notification);
 
-        var customerQueryModel = mapper.Map<CustomerQueryModel>(notification);
+        var customerQueryModel = notification.ToQueryModel();
         await synchronizeDb.UpsertAsync(customerQueryModel, filter => filter.Id == customerQueryModel.Id);
         await ClearCacheAsync(notification);
     }

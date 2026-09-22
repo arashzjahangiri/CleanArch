@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,18 +14,6 @@ internal static class WebApplicationExtensions
     public static async Task RunAppAsync(this WebApplication app)
     {
         await using var serviceScope = app.Services.CreateAsyncScope();
-
-        var mapper = serviceScope.ServiceProvider.GetRequiredService<IMapper>();
-
-        app.Logger.LogInformation("----- AutoMapper: mappings are being validated...");
-
-        // Validate the AutoMapper configuration by asserting that the mappings are valid
-        mapper.ConfigurationProvider.AssertConfigurationIsValid();
-
-        // Compile the AutoMapper mappings for better performance
-        mapper.ConfigurationProvider.CompileMappings();
-
-        app.Logger.LogInformation("----- AutoMapper: mappings are valid!");
 
         // Migrate the databases asynchronously using the provided service scope
         await app.MigrateDataBasesAsync(serviceScope);
