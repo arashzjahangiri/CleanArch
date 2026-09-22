@@ -1,0 +1,32 @@
+version: 2
+
+updates:
+  # Versions are pinned in Directory.Packages.props, so Dependabot is what moves them.
+  - package-ecosystem: nuget
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+    groups:
+      microsoft:
+        patterns:
+          - Microsoft.*
+          - System.*
+      xunit:
+        patterns:
+          - xunit*
+          - coverlet.*
+          - NSubstitute*
+      roslynator:
+        patterns:
+          - Roslynator.*
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: docker
+    directory: /src/Shop.PublicApi
+    schedule:
+      interval: weekly
