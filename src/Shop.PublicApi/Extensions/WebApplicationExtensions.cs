@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -49,8 +50,11 @@ internal static class WebApplicationExtensions
 
         app.Logger.LogInformation("----- {DbName}: checking if there are any pending migrations...", dbName);
 
-        // Check if there are any pending migrations for the context.
-        if (dbContext.Database.HasPendingModelChanges())
+        // Migrations the database has not applied yet. HasPendingModelChanges must not be used here:
+        // it reports model drift from the last snapshot, so an empty database looks up to date.
+        var pendingMigrations = await dbContext.Database.GetPendingMigrationsAsync();
+
+        if (pendingMigrations.Any())
         {
             app.Logger.LogInformation("----- {DbName}: creating and migrating the database...", dbName);
 
