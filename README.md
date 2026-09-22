@@ -1,20 +1,27 @@
-# .NET Core C# Clean Architecture, REST API, CQRS Event Sourcing, DDD, SOLID Principles
+# .NET 9 Clean Architecture, REST API, CQRS, Event Sourcing, DDD, SOLID
 
-implementing the concepts of S.O.L.I.D, Clean Code,
-CQRS (Command Query Responsibility Segregation) in DotNET 9.0
+A sample shop API implementing S.O.L.I.D, Clean Code and CQRS (Command Query Responsibility
+Segregation) on .NET 9, with the write side on SQL Server and the read side on MongoDB.
+
+> **Credit.** This project is based on
+> [jeangatto/ASP.NET-Core-Clean-Architecture-CQRS-Event-Sourcing](https://github.com/jeangatto/ASP.NET-Core-Clean-Architecture-CQRS-Event-Sourcing)
+> by Jean Francisco Flores Gatto, and remains MIT licensed under his copyright.
 
 ## **Technologies**
 
 - ASP.NET Core 9.0
 - Entity Framework Core 9.0
 - **EF Compiled Queries** (https://learn.microsoft.com/en-us/dotnet/framework/data/adonet/ef/language-reference/compiled-queries-linq-to-entities)
-- Unit & Integration Tests + xUnit + FluentAssertions (7.1.0)
+- Unit & Integration Tests + xUnit + FluentAssertions + NSubstitute + Bogus
 - Polly
-- AutoMapper
-- FluentValidator
+- FluentValidation
 - MediatR
+- Ardalis.Result — the Result pattern used across the application layer
+- ASP.NET API Versioning
+- CorrelationId
 - OpenApi
 - **Scalar** - Interactive API Reference from OpenAPI/Swagger (https://github.com/scalar/scalar)
+- MiniProfiler
 - HealthChecks
 - SQL Server
 - MongoDB
@@ -28,38 +35,60 @@ CQRS (Command Query Responsibility Segregation) in DotNET 9.0
 - Full architecture with responsibility separation concerns, SOLID and Clean Code
 - Domain Driven Design (Layers and Domain Model Pattern)
 - Domain Events
-- Domain Notification
 - Domain Validations
 - CQRS
 - Event Sourcing
 - Unit of Work
 - Repository Pattern
-- Resut Pattern
+- Result Pattern
 
 ## Running the application
 
-After cloning the repository to the desired folder, run the command in the terminal at the root of the project:
+Copy `.env.example` to `.env` and set your own passwords:
 
-```csharp
-dotnet clean Shop.sln --nologo /tl && dotnet build Shop.sln --nologo /tl
+```bash
+cp .env.example .env
 ```
 
-Next step, run the command in the terminal:
+Then build and start everything:
 
-```csharp
-docker-compose up --build --abort-on-container-exit --remove-orphans
+```bash
+docker compose up --build
 ```
 
-Now just open the url in the browser:
+Compose waits for SQL Server, MongoDB and Redis to report healthy before starting the API, which
+then applies any pending migrations and creates the MongoDB collections on first run.
 
-```csharp
+Open the API reference in a browser, using the port Compose mapped for `shop-webapi`:
+
+```
 http://localhost:{port}/scalar/v1
 ```
+
+To build and test without Docker:
+
+```bash
+dotnet build Shop.sln
+dotnet test Shop.sln
+```
+
+## Endpoints
+
+| Method | Route | Notes |
+| --- | --- | --- |
+| `POST` | `/api/customers` | Registers a customer |
+| `PUT` | `/api/customers` | Updates a customer's e-mail |
+| `DELETE` | `/api/customers/{id}` | Deletes a customer |
+| `GET` | `/api/customers/{id}` | Reads one customer from the read model |
+| `GET` | `/api/customers?pageNumber=1&pageSize=20` | Reads one page of customers, page size capped at 100 |
+| `GET` | `/health` | Liveness of SQL Server, MongoDB and Redis |
+
+There is no authentication: every endpoint is public, which is deliberate for a sample.
 
 ## MiniProfiler for .NET
 
 To access the page with the performance indicators and performance:
 
-```csharp
+```
 http://localhost:{port}/profiler/results-index
 ```

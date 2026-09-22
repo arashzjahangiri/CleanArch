@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
   <PropertyGroup>
-    <Authors>Jean Gatto (@jeangatto)</Authors>
-    <MaintainerEmail>jean_gatto@hotmail.com</MaintainerEmail>
+    <Authors>Arash Jahangiri (@arashzjahangiri)</Authors>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/jeangatto/ASP.NET-Core-Clean-Architecture-CQRS-Event-Sourcing</RepositoryUrl>
+    <RepositoryUrl>https://github.com/arashzjahangiri/CleanArch</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Copyright>Copyright (c) 2023 Jean Francisco Flores Gatto</Copyright>
     <NeutralLanguage>en</NeutralLanguage>
     <LangVersion>latest</LangVersion>
     <ImplicitUsings>disable</ImplicitUsings>
