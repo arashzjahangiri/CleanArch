@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Ardalis.Result;
 using Bogus;
 using FluentValidation;
-using FluentAssertions;
+using AwesomeAssertions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
