@@ -12,7 +12,7 @@ services:
       context: .
       dockerfile: src/Shop.PublicApi/Dockerfile
     expose:
-      - 80
+      - 8080
     networks:
       - app-network
     # Wait for the dependencies to accept connections, not merely to have been created.

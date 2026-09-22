@@ -127,7 +127,12 @@ app.MapScalarApiReference(scalarOptions =>
 
 app.UseErrorHandling();
 app.UseResponseCompression();
-app.UseHttpsRedirection();
+// Only redirect where an HTTPS endpoint actually exists; the container serves plain HTTP
+// behind a reverse proxy, where an unconditional redirect just produces a broken hop.
+if (!app.Environment.IsProduction())
+{
+    app.UseHttpsRedirection();
+}
 app.UseMiniProfiler();
 app.UseCorrelationId();
 // No authentication scheme is registered: every endpoint is intentionally public in this sample.
