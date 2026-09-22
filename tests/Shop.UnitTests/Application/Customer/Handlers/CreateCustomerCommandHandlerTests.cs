@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.Result;
 using Bogus;
+using FluentValidation;
 using FluentAssertions;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -96,6 +97,41 @@ public class CreateCustomerCommandHandlerTests(EfSqliteFixture fixture) : IClass
             .NotBeNullOrEmpty()
             .And.OnlyHaveUniqueItems()
             .And.Contain(errorMessage => errorMessage == "The provided email address is already in use.");
+    }
+
+    [Fact]
+    public async Task Add_InvalidEmailPassingValidation_ShouldReturnsFailResultAndNotPersist()
+    {
+        // Arrange: a validator that lets the command through, so the handler itself must reject the email.
+        var validator = Substitute.For<IValidator<CreateCustomerCommand>>();
+        validator
+            .ValidateAsync(Arg.Any<CreateCustomerCommand>(), Arg.Any<CancellationToken>())
+            .Returns(new FluentValidation.Results.ValidationResult());
+
+        var repository = Substitute.For<ICustomerWriteOnlyRepository>();
+        var unitOfWork = Substitute.For<IUnitOfWork>();
+
+        var command = new CreateCustomerCommand
+        {
+            FirstName = "John",
+            LastName = "Doe",
+            Gender = EGender.Male,
+            Email = "not-an-email",
+            DateOfBirth = new DateTime(1990, 5, 17)
+        };
+
+        var handler = new CreateCustomerCommandHandler(validator, repository, unitOfWork);
+
+        // Act
+        var act = await handler.Handle(command, CancellationToken.None);
+
+        // Assert
+        act.Should().NotBeNull();
+        act.IsSuccess.Should().BeFalse();
+        act.Errors.Should().NotBeNullOrEmpty().And.Contain("The e-mail address is invalid.");
+
+        repository.DidNotReceive().Add(Arg.Any<Shop.Domain.Entities.CustomerAggregate.Customer>());
+        await unitOfWork.DidNotReceive().SaveChangesAsync();
     }
 
     [Fact]

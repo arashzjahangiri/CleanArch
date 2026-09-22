@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.Result;
@@ -31,7 +32,11 @@ public class CreateCustomerCommandHandler(
         }
 
         // Instantiating the Email value object.
-        var email = Email.Create(request.Email).Value;
+        var emailResult = Email.Create(request.Email);
+        if (!emailResult.IsSuccess)
+            return Result<CreatedCustomerResponse>.Error(new ErrorList(emailResult.Errors.ToArray()));
+
+        var email = emailResult.Value;
 
         // Checking if a customer with the email address already exists.
         if (await repository.ExistsByEmailAsync(email))
