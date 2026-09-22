@@ -1,4 +1,4 @@
-using FluentAssertions;
+using AwesomeAssertions;
 using Shop.Domain.ValueObjects;
 using Xunit;
 using Xunit.Categories;

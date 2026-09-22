@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Bogus;
-using FluentAssertions;
+using AwesomeAssertions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using NSubstitute;

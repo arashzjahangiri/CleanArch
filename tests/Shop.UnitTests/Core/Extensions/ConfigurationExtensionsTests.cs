@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using FluentAssertions;
+using AwesomeAssertions;
 using Microsoft.Extensions.Configuration;
 using Shop.Core.AppSettings;
 using Shop.Core.Extensions;

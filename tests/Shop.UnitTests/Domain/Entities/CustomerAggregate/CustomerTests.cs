@@ -1,5 +1,5 @@
 using Bogus;
-using FluentAssertions;
+using AwesomeAssertions;
 using Shop.Domain.Entities.CustomerAggregate;
 using Shop.Domain.Entities.CustomerAggregate.Events;
 using Shop.Domain.Factories;

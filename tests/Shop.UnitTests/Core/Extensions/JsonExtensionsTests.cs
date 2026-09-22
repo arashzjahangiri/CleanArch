@@ -1,4 +1,4 @@
-using FluentAssertions;
+using AwesomeAssertions;
 using Shop.Core.Extensions;
 using Xunit;
 using Xunit.Categories;
