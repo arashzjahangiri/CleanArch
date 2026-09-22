@@ -25,52 +25,42 @@ internal class MemoryCacheService(
 
     public async Task<TItem> GetOrCreateAsync<TItem>(string cacheKey, Func<Task<TItem>> factory)
     {
-        return await memoryCache.GetOrCreateAsync(cacheKey, async cacheEntry =>
+        // GetOrCreateAsync must not be used here: it commits the factory result to an entry that
+        // carries no expiration, which both overrides these options and caches absent values.
+        if (memoryCache.TryGetValue(cacheKey, out TItem cachedItem))
         {
-            var cacheValue = cacheEntry?.Value;
-            if (cacheValue != null)
-            {
-                logger.LogInformation(
-                    "----- Fetched from {CacheServiceName} '{CacheKey}'", CacheServiceName, cacheKey);
+            logger.LogInformation("----- Fetched from {CacheServiceName}: '{CacheKey}'", CacheServiceName, cacheKey);
+            return cachedItem;
+        }
 
-                return (TItem)cacheValue;
-            }
+        var item = await factory();
+        if (!item.IsDefault()) // SonarQube Bug: item != nulll
+        {
+            logger.LogInformation("----- Added to {CacheServiceName}: '{CacheKey}'", CacheServiceName, cacheKey);
+            memoryCache.Set(cacheKey, item, _cacheOptions);
+        }
 
-            var item = await factory();
-            if (!item.IsDefault()) // SonarQube Bug: item != nulll
-            {
-                logger.LogInformation("----- Added to {CacheServiceName}: '{CacheKey}'", CacheServiceName, cacheKey);
-                memoryCache.Set(cacheKey, item, _cacheOptions);
-            }
-
-            return item;
-        });
+        return item;
     }
 
     public async Task<IReadOnlyList<TItem>> GetOrCreateAsync<TItem>(
         string cacheKey,
         Func<Task<IReadOnlyList<TItem>>> factory)
     {
-        return await memoryCache.GetOrCreateAsync(cacheKey, async cacheEntry =>
+        if (memoryCache.TryGetValue(cacheKey, out IReadOnlyList<TItem> cachedItems))
         {
-            var cacheValues = cacheEntry?.Value;
-            if (cacheValues != null)
-            {
-                logger.LogInformation(
-                    "----- Fetched from {CacheServiceName}: '{CacheKey}'", CacheServiceName, cacheKey);
+            logger.LogInformation("----- Fetched from {CacheServiceName}: '{CacheKey}'", CacheServiceName, cacheKey);
+            return cachedItems;
+        }
 
-                return (IReadOnlyList<TItem>)cacheValues;
-            }
+        var items = await factory();
+        if (items?.Any() == true)
+        {
+            logger.LogInformation("----- Added to {CacheServiceName}: '{CacheKey}'", CacheServiceName, cacheKey);
+            memoryCache.Set(cacheKey, items, _cacheOptions);
+        }
 
-            var items = await factory();
-            if (items?.Any() == true)
-            {
-                logger.LogInformation("----- Added to {CacheServiceName}: '{CacheKey}'", CacheServiceName, cacheKey);
-                memoryCache.Set(cacheKey, items, _cacheOptions);
-            }
-
-            return items;
-        });
+        return items;
     }
 
     public Task RemoveAsync(params string[] cacheKeys)
