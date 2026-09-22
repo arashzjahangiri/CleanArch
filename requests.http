@@ -1,17 +1,66 @@
-### Register a new customer
+@host = http://localhost:8080
 
-POST http://localhost:56570/api/customers HTTP/1.1
+### Register a new customer
+# Returns 201 with the new Id. Gender accepts "male" / "female" or 0 / 1.
+
+POST {{host}}/api/customers HTTP/1.1
 content-type: application/json
 
 {
   "firstName": "John",
   "lastName": "Doe",
   "gender": "male",
-  "email": "john_doe@gmail.com",
+  "email": "john_doe@hostname.com",
   "dateOfBirth": "1990-01-01"
 }
 
-### Gets a list of all customers
+### Get one page of customers
+# pageNumber defaults to 1, pageSize to 20, and pageSize is capped at 100.
 
-GET http://localhost:56570/api/customers HTTP/1.1
+GET {{host}}/api/customers?pageNumber=1&pageSize=20 HTTP/1.1
+
+### Get the second page
+
+GET {{host}}/api/customers?pageNumber=2&pageSize=20 HTTP/1.1
+
+### Get a customer by Id
+# Paste an Id returned by the POST above.
+
+@customerId = 00000000-0000-0000-0000-000000000000
+
+GET {{host}}/api/customers/{{customerId}} HTTP/1.1
+
+### Update a customer's e-mail
+
+PUT {{host}}/api/customers HTTP/1.1
 content-type: application/json
+
+{
+  "id": "{{customerId}}",
+  "email": "john_doe_updated@hostname.com"
+}
+
+### Delete a customer
+
+DELETE {{host}}/api/customers/{{customerId}} HTTP/1.1
+
+### Health of SQL Server, MongoDB and Redis
+
+GET {{host}}/health HTTP/1.1
+
+### Rejected: page size above the cap of 100
+
+GET {{host}}/api/customers?pageSize=500 HTTP/1.1
+
+### Rejected: malformed e-mail address
+
+POST {{host}}/api/customers HTTP/1.1
+content-type: application/json
+
+{
+  "firstName": "Bad",
+  "lastName": "Email",
+  "gender": "male",
+  "email": "not-an-email",
+  "dateOfBirth": "1990-01-01"
+}

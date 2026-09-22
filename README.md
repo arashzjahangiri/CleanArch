@@ -136,6 +136,41 @@ dotnet test Shop.sln
 
 There is no authentication: every endpoint is public, which is deliberate for a sample.
 
+### Calling them
+
+The easiest way is the Scalar UI at `http://localhost:8080/scalar/v1` — it lists every endpoint and
+lets you fill in a body and send it from the browser.
+
+`requests.http` in the repository root holds a ready-made request per endpoint. Open it in Visual
+Studio, Rider, or VS Code with the REST Client extension, and click "Send Request" above any block.
+
+From a terminal, register a customer and then read it back:
+
+```bash
+curl -X POST http://localhost:8080/api/customers \
+  -H "content-type: application/json" \
+  -d '{"firstName":"John","lastName":"Doe","gender":"male","email":"john_doe@hostname.com","dateOfBirth":"1990-01-01"}'
+
+curl "http://localhost:8080/api/customers?pageNumber=1&pageSize=20"
+```
+
+```powershell
+$body = '{"firstName":"John","lastName":"Doe","gender":"male","email":"john_doe@hostname.com","dateOfBirth":"1990-01-01"}'
+Invoke-RestMethod -Uri http://localhost:8080/api/customers -Method Post -Body $body -ContentType 'application/json'
+
+Invoke-RestMethod -Uri 'http://localhost:8080/api/customers?pageNumber=1&pageSize=20'
+```
+
+`gender` accepts either the name (`"male"`, `"female"`) or the number (`0`, `1`). Every response is
+wrapped in the same envelope:
+
+```json
+{ "result": { "id": "..." }, "success": true, "statusCode": 201, "errors": [] }
+```
+
+On failure `success` is `false` and `errors` carries the messages, for example
+`'PageSize' must be between 1 and 100. You entered 500.`
+
 ## MiniProfiler for .NET
 
 To access the page with the performance indicators and performance:
