@@ -40,13 +40,11 @@ public class EfSqliteFixture : IAsyncLifetime, IDisposable
     // To detect redundant calls.
     private bool _disposed;
 
-    ~EfSqliteFixture() => Dispose(false);
 
     // Public implementation of Dispose pattern callable by consumers.
     public void Dispose()
     {
         Dispose(true);
-        GC.SuppressFinalize(this);
     }
 
     // Protected implementation of Dispose pattern.

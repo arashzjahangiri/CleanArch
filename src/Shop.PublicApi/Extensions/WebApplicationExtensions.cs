@@ -26,9 +26,11 @@ internal static class WebApplicationExtensions
 
     private static async Task MigrateDataBasesAsync(this WebApplication app, AsyncServiceScope serviceScope)
     {
-        await using var writeDbContext = serviceScope.ServiceProvider.GetRequiredService<WriteDbContext>();
-        await using var eventStoreDbContext = serviceScope.ServiceProvider.GetRequiredService<EventStoreDbContext>();
-        using var readDbContext = serviceScope.ServiceProvider.GetRequiredService<IReadDbContext>();
+        // Resolved from the scope, so the scope disposes them. Disposing here as well would
+        // return a pooled context to the pool twice.
+        var writeDbContext = serviceScope.ServiceProvider.GetRequiredService<WriteDbContext>();
+        var eventStoreDbContext = serviceScope.ServiceProvider.GetRequiredService<EventStoreDbContext>();
+        var readDbContext = serviceScope.ServiceProvider.GetRequiredService<IReadDbContext>();
 
         try
         {

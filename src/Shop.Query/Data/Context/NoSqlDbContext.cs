@@ -160,14 +160,11 @@ public sealed class NoSqlDbContext : IReadDbContext, ISynchronizeDb
     // To detect redundant calls.
     private bool _disposed;
 
-    // Public implementation of Dispose pattern callable by consumers.
-    ~NoSqlDbContext() => Dispose(false);
 
     // Public implementation of Dispose pattern callable by consumers.
     public void Dispose()
     {
         Dispose(true);
-        GC.SuppressFinalize(this);
     }
 
     // Protected implementation of Dispose pattern.
