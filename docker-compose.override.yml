@@ -7,5 +7,6 @@ services:
       - ConnectionStrings__SqlConnection=Server=shop-sql-server;Initial Catalog=ShopContext;User Id=sa;Password=${MSSQL_SA_PASSWORD};Trusted_Connection=False;TrustServerCertificate=True;
       - ConnectionStrings__NoSqlConnection=mongodb://shop-mongo-server
       - ConnectionStrings__CacheConnection=shop-redis:6379,password=${REDIS_PASSWORD},abortConnect=false
+    # Fixed host port so the documented URLs always work. Override with API_PORT in .env.
     ports:
-      - "8080"
+      - "${API_PORT:-8080}:8080"

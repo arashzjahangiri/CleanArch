@@ -44,8 +44,13 @@ Segregation) on .NET 9, with the write side on SQL Server and the read side on M
 
 ## Running the application
 
-Copy `.env.example` to `.env`, then open it and replace the placeholder passwords with your own.
-Compose refuses to start until both variables have a value, and `.env` is git-ignored.
+You need [Docker Desktop](https://www.docker.com/products/docker-desktop/) (or Docker Engine with
+the Compose plugin). Nothing else — the .NET SDK is only needed if you want to build outside Docker.
+
+### Step 1 — create your `.env` file
+
+The stack reads its passwords from a file named `.env` in the repository root. That file is
+**git-ignored and does not exist after you clone**, so you have to create it. Copy the template:
 
 ```bash
 # Linux / macOS
@@ -57,20 +62,59 @@ cp .env.example .env
 Copy-Item .env.example .env
 ```
 
-Then build and start everything:
+### Step 2 — set your passwords
+
+Open the new `.env` in any text editor. It looks like this:
+
+```dotenv
+MSSQL_SA_PASSWORD=ChangeMe_Str0ng!Pass
+REDIS_PASSWORD=ChangeMe_Str0ng!Pass
+API_PORT=8080
+```
+
+Replace both `ChangeMe_Str0ng!Pass` values with passwords of your own. Two rules matter:
+
+- **`MSSQL_SA_PASSWORD`** must be at least 8 characters and mix upper case, lower case, digits and
+  symbols. SQL Server enforces this itself, and a weaker password makes its container fail to start.
+- **`REDIS_PASSWORD`** has no rules; any non-empty value works.
+
+Leave `API_PORT` at `8080` unless that port is already in use on your machine.
+
+Do not wrap the values in quotes, and do not put spaces around the `=`.
+
+### Step 3 — start everything
 
 ```bash
 docker compose up --build
 ```
 
-Compose waits for SQL Server, MongoDB and Redis to report healthy before starting the API, which
-then applies any pending migrations and creates the MongoDB collections on first run.
+Compose starts SQL Server, MongoDB and Redis first and waits until all three report healthy. Only
+then does the API start, apply any pending EF Core migrations, and create the MongoDB collections.
+First run takes a couple of minutes because the images have to be pulled and the image built.
 
-Open the API reference in a browser, using the port Compose mapped for `shop-webapi`:
+You will know it is ready when the log shows:
 
 ```
-http://localhost:{port}/scalar/v1
+----- Application is starting....
+Now listening on: http://[::]:8080
 ```
+
+### Step 4 — open the API
+
+```
+http://localhost:8080/scalar/v1
+```
+
+To stop the stack, press `Ctrl+C`, then run `docker compose down`. Add `-v` to also delete the
+database volumes and start completely fresh next time.
+
+### If it does not start
+
+| What you see | What to do |
+| --- | --- |
+| `required variable MSSQL_SA_PASSWORD is missing a value` | You skipped step 1, or `.env` is not in the repository root. |
+| `shop-sql-server` is unhealthy and restarting | Your `MSSQL_SA_PASSWORD` is too weak. See step 2. |
+| `port is already allocated` | Change `API_PORT` in `.env` to a free port. |
 
 To build and test without Docker:
 
@@ -97,5 +141,5 @@ There is no authentication: every endpoint is public, which is deliberate for a 
 To access the page with the performance indicators and performance:
 
 ```
-http://localhost:{port}/profiler/results-index
+http://localhost:8080/profiler/results-index
 ```
