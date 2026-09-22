@@ -1,0 +1,24 @@
+# Normalise line endings so checkouts are consistent across Windows, macOS and Linux.
+* text=auto
+
+*.cs           text diff=csharp
+*.csproj       text
+*.sln          text eol=crlf
+*.props        text
+*.targets      text
+*.json         text
+*.md           text
+*.yml          text
+*.yaml         text
+*.http         text
+
+# Files consumed by Linux containers must keep LF regardless of platform.
+Dockerfile     text eol=lf
+.dockerignore  text eol=lf
+.env.example   text eol=lf
+
+*.png          binary
+*.jpg          binary
+*.ico          binary
+*.mdf          binary
+*.ldf          binary
