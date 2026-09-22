@@ -130,8 +130,7 @@ app.UseResponseCompression();
 app.UseHttpsRedirection();
 app.UseMiniProfiler();
 app.UseCorrelationId();
-app.UseAuthentication();
-app.UseAuthorization();
+// No authentication scheme is registered: every endpoint is intentionally public in this sample.
 app.MapControllers();
 
 await app.RunAppAsync();
