@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Shop.Query.Abstractions;
@@ -9,5 +8,11 @@ namespace Shop.Query.Data.Repositories.Abstractions;
 
 public interface ICustomerReadOnlyRepository : IReadOnlyRepository<CustomerQueryModel, Guid>
 {
-    Task<IEnumerable<CustomerQueryModel>> GetAllAsync(CancellationToken cancellationToken = default);
+    /// <summary>
+    /// Reads one page of customers, ordered by first name then date of birth.
+    /// </summary>
+    Task<PagedQueryResult<CustomerQueryModel>> GetAllAsync(
+        int pageNumber,
+        int pageSize,
+        CancellationToken cancellationToken = default);
 }

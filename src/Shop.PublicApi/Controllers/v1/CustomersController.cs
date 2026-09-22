@@ -110,13 +110,17 @@ public class CustomersController(IMediator mediator) : ControllerBase
     /// <summary>
     /// Gets a list of all customers.
     /// </summary>
-    /// <response code="200">Returns the list of clients.</response>
+    /// <response code="200">Returns one page of clients.</response>
+    /// <response code="400">Returns list of errors if the paging arguments are invalid.</response>
     /// <response code="500">When an unexpected internal error occurs on the server.</response>
     [HttpGet]
     [Consumes(MediaTypeNames.Application.Json)]
     [Produces(MediaTypeNames.Application.Json)]
-    [ProducesResponseType(typeof(ApiResponse<IEnumerable<CustomerQueryModel>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse<PagedQueryResult<CustomerQueryModel>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetAll() =>
-        (await mediator.Send(new GetAllCustomerQuery())).ToActionResult();
+    public async Task<IActionResult> GetAll(
+        [FromQuery] int pageNumber = GetAllCustomerQuery.DefaultPageNumber,
+        [FromQuery] int pageSize = GetAllCustomerQuery.DefaultPageSize) =>
+        (await mediator.Send(new GetAllCustomerQuery(pageNumber, pageSize))).ToActionResult();
 }

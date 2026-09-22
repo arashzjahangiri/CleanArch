@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MongoDB.Driver;
@@ -12,18 +11,29 @@ namespace Shop.Query.Data.Repositories;
 internal class CustomerReadOnlyRepository(IReadDbContext readDbContext)
     : BaseReadOnlyRepository<CustomerQueryModel, Guid>(readDbContext), ICustomerReadOnlyRepository
 {
-    public async Task<IEnumerable<CustomerQueryModel>> GetAllAsync(CancellationToken cancellationToken = default)
+    public async Task<PagedQueryResult<CustomerQueryModel>> GetAllAsync(
+        int pageNumber,
+        int pageSize,
+        CancellationToken cancellationToken = default)
     {
+        var filter = Builders<CustomerQueryModel>.Filter.Empty;
+
         var sort = Builders<CustomerQueryModel>.Sort
             .Ascending(customer => customer.FirstName)
             .Descending(customer => customer.DateOfBirth);
 
         var findOptions = new FindOptions<CustomerQueryModel>
         {
-            Sort = sort
+            Sort = sort,
+            Skip = (pageNumber - 1) * pageSize,
+            Limit = pageSize
         };
 
-        using var asyncCursor = await Collection.FindAsync(Builders<CustomerQueryModel>.Filter.Empty, findOptions, cancellationToken);
-        return await asyncCursor.ToListAsync(cancellationToken);
+        var totalCount = await Collection.CountDocumentsAsync(filter, cancellationToken: cancellationToken);
+
+        using var asyncCursor = await Collection.FindAsync(filter, findOptions, cancellationToken);
+        var items = await asyncCursor.ToListAsync(cancellationToken);
+
+        return new PagedQueryResult<CustomerQueryModel>(items, pageNumber, pageSize, totalCount);
     }
 }

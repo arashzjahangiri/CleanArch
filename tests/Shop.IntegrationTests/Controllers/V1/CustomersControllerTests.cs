@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Bogus;
 using FluentAssertions;
@@ -179,7 +180,9 @@ public class CustomersControllerTests : IAsyncLifetime
             .Generate(10);
 
         var readOnlyRepository = Substitute.For<ICustomerReadOnlyRepository>();
-        readOnlyRepository.GetAllAsync().Returns(queryModels);
+        readOnlyRepository
+            .GetAllAsync(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<CancellationToken>())
+            .Returns(new PagedQueryResult<CustomerQueryModel>(queryModels, 1, 20, queryModels.Count));
 
         await using var webApplicationFactory = InitializeWebAppFactory(services =>
         {
@@ -198,12 +201,15 @@ public class CustomersControllerTests : IAsyncLifetime
         act.StatusCode.Should().Be(HttpStatusCode.OK);
 
         // Assert (HTTP Content Response)
-        var response = (await act.Content.ReadAsStringAsync()).FromJson<ApiResponse<IEnumerable<CustomerQueryModel>>>();
+        var response = (await act.Content.ReadAsStringAsync()).FromJson<ApiResponse<PagedQueryResult<CustomerQueryModel>>>();
         response.Should().NotBeNull();
         response.Success.Should().BeTrue();
         response.StatusCode.Should().Be(StatusCodes.Status200OK);
         response.Errors.Should().BeEmpty();
-        response.Result.Should().NotBeNullOrEmpty()
+        response.Result.PageNumber.Should().Be(1);
+        response.Result.PageSize.Should().Be(20);
+        response.Result.TotalCount.Should().Be(queryModels.Count);
+        response.Result.Items.Should().NotBeNullOrEmpty()
             .And.OnlyHaveUniqueItems()
             .And.HaveCount(queryModels.Count)
             .And.AllSatisfy(model =>
@@ -216,7 +222,7 @@ public class CustomersControllerTests : IAsyncLifetime
                 model.FullName.Should().NotBeNullOrWhiteSpace();
             });
 
-        await readOnlyRepository.Received(1).GetAllAsync();
+        await readOnlyRepository.Received(1).GetAllAsync(1, 20, Arg.Any<CancellationToken>());
     }
 
     #endregion

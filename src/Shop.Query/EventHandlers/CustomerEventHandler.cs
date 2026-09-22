@@ -48,7 +48,7 @@ public class CustomerEventHandler(
 
     private async Task ClearCacheAsync(CustomerBaseEvent @event, CancellationToken cancellationToken)
     {
-        var cacheKeys = new[] { nameof(GetAllCustomerQuery), $"{nameof(GetCustomerByIdQuery)}_{@event.Id}" };
+        var cacheKeys = new[] { $"{nameof(GetCustomerByIdQuery)}_{@event.Id}" };
         await cacheService.RemoveAsync(cacheKeys, cancellationToken);
     }
 

@@ -1,27 +1,34 @@
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.Result;
+using Ardalis.Result.FluentValidation;
+using FluentValidation;
 using MediatR;
-using Shop.Core.SharedKernel;
 using Shop.Query.Application.Customer.Queries;
 using Shop.Query.Data.Repositories.Abstractions;
 using Shop.Query.QueriesModel;
 
 namespace Shop.Query.Application.Customer.Handlers;
 
-public class GetAllCustomerQueryHandler(ICustomerReadOnlyRepository repository, ICacheService cacheService)
-    : IRequestHandler<GetAllCustomerQuery, Result<IEnumerable<CustomerQueryModel>>>
+public class GetAllCustomerQueryHandler(
+    IValidator<GetAllCustomerQuery> validator,
+    ICustomerReadOnlyRepository repository)
+    : IRequestHandler<GetAllCustomerQuery, Result<PagedQueryResult<CustomerQueryModel>>>
 {
-    private const string CacheKey = nameof(GetAllCustomerQuery);
-
-    public async Task<Result<IEnumerable<CustomerQueryModel>>> Handle(
-          GetAllCustomerQuery request,
-          CancellationToken cancellationToken)
+    public async Task<Result<PagedQueryResult<CustomerQueryModel>>> Handle(
+        GetAllCustomerQuery request,
+        CancellationToken cancellationToken)
     {
-        // This method will either return the cached data associated with the CacheKey
-        // or create it by calling the GetAllAsync method.
-        return Result<IEnumerable<CustomerQueryModel>>.Success(
-            await cacheService.GetOrCreateAsync(CacheKey, repository.GetAllAsync, cancellationToken));
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            return Result<PagedQueryResult<CustomerQueryModel>>.Invalid(validationResult.AsErrors());
+        }
+
+        // Deliberately uncached: a page of a mutable list cannot be invalidated precisely,
+        // so caching it would serve stale pages after any customer change.
+        var page = await repository.GetAllAsync(request.PageNumber, request.PageSize, cancellationToken);
+
+        return Result<PagedQueryResult<CustomerQueryModel>>.Success(page);
     }
 }
