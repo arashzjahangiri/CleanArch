@@ -490,3 +490,7 @@ $RECYCLE.BIN/
 data-mssql/
 data-mongo/
 data-redis/
+
+# Local compose credentials
+.env
+!.env.example
