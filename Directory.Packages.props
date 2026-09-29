@@ -58,7 +58,7 @@
     <PackageVersion Include="Roslynator.CodeFixes" Version="5.0.0" />
     <PackageVersion Include="Roslynator.Formatting.Analyzers" Version="5.0.0" />
     <PackageVersion Include="Roslynator.Refactorings" Version="5.0.0" />
-    <PackageVersion Include="Scalar.AspNetCore" Version="2.17.8" />
+    <PackageVersion Include="Scalar.AspNetCore" Version="2.17.11" />
     <PackageVersion Include="System.Configuration.ConfigurationManager" Version="10.0.12" />
    <PackageVersion Include="xunit.analyzers" Version="2.1.0" />
     <PackageVersion Include="xunit.categories" Version="3.0.1" />
