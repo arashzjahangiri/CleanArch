@@ -41,15 +41,21 @@ builder.Services
     {
         versioningOptions.DefaultApiVersion = ApiVersion.Default;
         versioningOptions.ReportApiVersions = true;
+        // Routes carry no version segment and clients send no api-version, so unversioned
+        // requests must still resolve to the default. AV0016 does not apply here.
+#pragma warning disable AV0016
         versioningOptions.AssumeDefaultVersionWhenUnspecified = true;
+#pragma warning restore AV0016
+        versioningOptions.ApiVersionReader = new QueryStringApiVersionReader();
     })
+    .AddMvc()
     .AddApiExplorer(explorerOptions =>
     {
         explorerOptions.GroupNameFormat = "'v'VVV";
         explorerOptions.SubstituteApiVersionInUrl = true;
-    });
+    })
+    .AddOpenApi();
 
-builder.Services.AddOpenApi();
 builder.Services.AddDataProtection();
 builder.Services.AddControllers()
     .ConfigureApiBehaviorOptions(behaviorOptions =>
@@ -113,7 +119,7 @@ app.UseHealthChecks("/health", new HealthCheckOptions
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
 
-app.MapOpenApi();
+app.MapOpenApi().WithDocumentPerVersion();
 
 // Route: /scalar/v1
 app.MapScalarApiReference(scalarOptions =>
