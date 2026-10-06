@@ -54,11 +54,11 @@
     <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="1.0.17" />
     <PackageVersion Include="NSubstitute" Version="6.2.0" />
     <PackageVersion Include="Polly" Version="8.8.0" />
-    <PackageVersion Include="Roslynator.Analyzers" Version="5.0.0" />
-    <PackageVersion Include="Roslynator.CodeAnalysis.Analyzers" Version="5.0.0" />
-    <PackageVersion Include="Roslynator.CodeFixes" Version="5.0.0" />
-    <PackageVersion Include="Roslynator.Formatting.Analyzers" Version="5.0.0" />
-    <PackageVersion Include="Roslynator.Refactorings" Version="5.0.0" />
+    <PackageVersion Include="Roslynator.Analyzers" Version="5.0.1" />
+    <PackageVersion Include="Roslynator.CodeAnalysis.Analyzers" Version="5.0.1" />
+    <PackageVersion Include="Roslynator.CodeFixes" Version="5.0.1" />
+    <PackageVersion Include="Roslynator.Formatting.Analyzers" Version="5.0.1" />
+    <PackageVersion Include="Roslynator.Refactorings" Version="5.0.1" />
     <PackageVersion Include="Scalar.AspNetCore" Version="2.17.11" />
     <PackageVersion Include="System.Configuration.ConfigurationManager" Version="10.0.12" />
    <PackageVersion Include="xunit.analyzers" Version="2.1.0" />
